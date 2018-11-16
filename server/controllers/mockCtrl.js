@@ -1,4 +1,16 @@
-import { addStudentHelper, deleteStudentHelper, getAllStudentsHelper, updateStudentHelper } from '../../database/dbHelpers';
+import { 
+  addStudentHelper, 
+  deleteStudentHelper, 
+  getAllStudentsHelper, 
+  updateStudentHelper 
+} from '../../database/helpers/studentHelpers';
+
+import {
+  addQuestionHelper,
+  deleteQuestionHelper,
+  getAllQuestionsHelper,
+  updateQuestionHelper
+} from '../../database/helpers/mockHelpers';
 
 const addStudent = (req, res) => {
   let { name, cohort } = req.body;
