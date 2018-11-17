@@ -5,13 +5,36 @@ const studentSchema = new mongoose.Schema({
   name: String,
   cohort: Number,
   questions: {
-    default: { 
-      JSFundamentals: {}, //ideally, we have the question # as key and how well they did out of 10
-      CSS: {},
-      HTML: {},
-      Database: {},
-      BH: {},
-    }
+    JSFundamentals: {
+      average: {
+        type: Number,
+        default: 0
+      }
+    }, //ideally, we have the question # as key and how well they did out of 10
+    CSS: {
+      average: {
+        type: Number,
+        default: 0
+      }
+    },
+    HTML: {
+      average: {
+        type: Number,
+        default: 0
+      }
+    },
+    Database: {
+      average: {
+        type: Number,
+        default: 0
+      }
+    },
+    BH: {
+      average: {
+        type: Number,
+        default: 0
+      }
+    },
   },
 });
 
