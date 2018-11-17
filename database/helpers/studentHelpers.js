@@ -1,34 +1,12 @@
 import Student from '../schemas/student.js';
 
-const addStudentHelper = (name, cohort, callback) => {
-  let student = new Student({ name, cohort });
+const addStudentHelper = (name, cohort) => new Student({ name, cohort }).save();
 
-  student.save((err, stud) => {
-    if (err) console.error(err);
-    callback();
-  })
-}
+const deleteStudentHelper = (name) => Student.deleteOne({ name });
 
-const deleteStudentHelper = (name, callback) => { //convert to thenables
-  Student.deleteOne({ name }, (err) => {
-    if (err) console.error(err);
-    callback()
-  });
-}
+const getAllStudentsHelper = () => Student.find({});
 
-const getAllStudentsHelper = (callback) => { //convert to thenables
-  Students.find({}, (err, result) => {
-    if (err) console.error(err);
-    callback(result);
-  });
-}
-
-const updateStudentHelper = (name, objString, value, callback) => {
-  Student.updateOne({ name }, { $set: { [objString]: value }}, (err, doc) => {
-    if (err) console.error(err);
-    callback();
-  });
-}
+const updateStudentHelper = (name, objString, value) => Student.updateOne({ name }, { $set: { [objString]: value }});
 
 export {
   addStudentHelper,

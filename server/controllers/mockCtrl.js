@@ -15,26 +15,32 @@ import {
 const getEverything = (req, res) => {
   //grab all student data
   //grab all questions
-
-  // getAllStudent((result) =>
-  // res.status(200).send(result))
+  getAllStudentsHelper()
+    .then((data) => res.status(201).send(data))
+    .catch(err => res.status(404).send('error'));
   //getAllQuestionsHelper
 }
 
 const addStudent = (req, res) => {
   let { name, cohort } = req.body;
-  addStudentHelper(name, cohort, () => res.status(201).send('success'));
+  addStudentHelper(name, cohort)
+    .then(() => res.status(201).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 const deleteStudent = (req, res) => {
-  let { name } = req.body
-  deleteStudentHelper(name, () => res.status(200).send('success'));
+  let { name } = req.body;
+  deleteStudentHelper(name)
+    .then(() => res.status(200).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 const updateStudent = (req, res) => {
   let { name, category, questionId, value } = req.body; 
   let objString = `questions.${category}.${questionId}`;//objString should be ex. questions.JSFundamentals.1 | value = number
-  updateStudentHelper(name, objString, value, () => res.status(201).send('success'));
+  updateStudentHelper(name, objString, value)
+    .then(() => res.status(201).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 const addQuestion = (req, res) => {
