@@ -23,8 +23,8 @@ const getAllStudentsHelper = (callback) => { //convert to thenables
   });
 }
 
-const updateStudentHelper = (name, question, callback) => {
-  Student.findOneAndUpdate({ name }, { question }, { upsert: true }, (err, doc) => {
+const updateStudentHelper = (name, objString, value, callback) => {
+  Student.updateOne({ name }, { $set: { [objString]: value }}, (err, doc) => {
     if (err) console.error(err);
     callback();
   });

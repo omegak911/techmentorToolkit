@@ -34,8 +34,9 @@ const getEverything = (req, res) => {
 
 const updateStudent = (req, res) => {
   //update student questions
-  let { name, question } = req.body;
-  updateStudentHelper(name, question, () => res.status(201).send('success'));
+  let { name, category, questionId, value } = req.body; //question should be ex. questions.JSFundamentals.1 | value = number
+  let objString = `questions.${category}.${questionId}`;
+  updateStudentHelper(name, objString, value, () => res.status(201).send('success'));
 }
 
 export {
