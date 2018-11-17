@@ -1,4 +1,4 @@
-import Question from '../schemas/mockInterview.js';
+import Question from '../schemas/question.js';
 
 const addQuestionHelper = (category, text) => {
 

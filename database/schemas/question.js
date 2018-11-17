@@ -1,4 +1,4 @@
-import db from '../index';
+import db from '..';
 import mongoose from 'mongoose';
 
 const questionSchema = new mongoose.Schema({
