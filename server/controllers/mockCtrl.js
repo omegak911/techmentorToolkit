@@ -45,17 +45,23 @@ const updateStudent = (req, res) => {
 
 const addQuestion = (req, res) => {
   let { category, text } = req.body;
-  addQuestionHelper(category, text, () => res.status(201).send('success'));
+  addQuestionHelper(category, text)
+    .then(() => res.status(201).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 const deleteQuestion = (req, res) => {
   let { id } = req.body;
-  deleteQuestionHelper(id, () => res.status(200).send('success'));
+  deleteQuestionHelper(id)
+    .then(() => res.status(201).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 const updateQuestion = (req, res) => {
   let { id, text } = req.body;
-  updateQuestionHelper(id, text, () => res.status(201).send('success'));
+  updateQuestionHelper(id, text)
+    .then(() => res.status(201).send('success'))
+    .catch(err => res.status(404).send('error'));
 }
 
 export {
