@@ -1,5 +1,12 @@
 import express from 'express';
-import { addStudent, deleteStudent, getEverything, updateStudent } from '../controllers/mockCtrl';
+import {   
+  getEverything,
+  addStudent,
+  deleteStudent,
+  updateStudent,
+  addQuestion,
+  deleteQuestion,
+  updateQuestion} from '../controllers/mockCtrl';
 
 const router = express.Router();
 
@@ -8,8 +15,10 @@ router.route('/student')
   .patch(updateStudent)
   .delete(deleteStudent);
 
-// router.route('/questions')
-//   .post()
+router.route('/questions')
+  .post(addQuestion)
+  .patch(updateQuestion)
+  .delete(deleteQuestion);
 
 router.route('/load')
   .get(getEverything);
