@@ -13,12 +13,13 @@ import {
 } from '../../database/helpers/questionHelpers';
 
 const getEverything = (req, res) => {
-  //grab all student data
-  //grab all questions
   getAllStudentsHelper()
-    .then((data) => res.status(201).send(data))
+    .then(studentData => {
+      getAllQuestionsHelper()
+        .then(questionData => res.status(201).send({ studentData, questionData }))
+        .catch(err => res.status(404).send('error'));
+    })
     .catch(err => res.status(404).send('error'));
-  //getAllQuestionsHelper
 }
 
 const addStudent = (req, res) => {
