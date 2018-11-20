@@ -1,14 +1,12 @@
 import express from 'express';
 import path from 'path';
-import parser from 'body-parser';
-
+import middleware from './middleware/middleware';
 import router from './router';
 
 const app = express();
 const port = 3003;
 
-app.use(parser.json());
-app.use(parser.urlencoded({ extended: true }));
+app.use(...middleware);
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use('/api', router);
