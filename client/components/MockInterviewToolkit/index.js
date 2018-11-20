@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 
 import Landing from './Landing';
-import ProtectedRoutes from './ProtectedRouters';
+import ProtectedRoutes from './ProtectedRoutes';
 
 class MockInterviewToolkit extends Component {
   constructor(props) {
