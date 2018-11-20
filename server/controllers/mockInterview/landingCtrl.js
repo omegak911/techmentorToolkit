@@ -39,8 +39,14 @@ const addBoss = (req, res) => {
   }
 }
 
-const loginValidator = (password) => { //sessions should use this
-  return password === Login_PW;
+const loginValidator = (req, res) => { //sessions should use this
+  console.log(req.session) 
+  if (req.body.password === Login_PW) {
+    //if password is correct, update session object to indicate authenticated - to be used by gateway
+    req.status(200).send('success');
+  } else {
+    res.status(404).send('error');
+  }
 }
 
 const updateStudentCollection = (req, res) => {
@@ -53,22 +59,19 @@ const updateStudentCollection = (req, res) => {
 }
 
 const getEverything = (req, res) => {
-  if (loginValidator(req.body.password)) {
-    getAllStudentsHelper()
-      .then(studentData => {
-        getAllQuestionsHelper()
-          .then(questionData => res.status(201).send({ studentData, questionData }))
-          .catch(err => res.status(404).send('error'));
-      })
-      .catch(err => res.status(404).send('error'));
-  } else {
-    res.status(404).send('Forbidden')
-  }
+  getAllStudentsHelper()
+    .then(studentData => {
+      getAllQuestionsHelper()
+        .then(questionData => res.status(201).send({ studentData, questionData }))
+        .catch(err => res.status(404).send('error'));
+    })
+    .catch(err => res.status(404).send('error'));
 }
 
 export {
   addMentor,
   addBoss,
+  loginValidator,
   updateStudentCollection,
   getEverything,
 };
