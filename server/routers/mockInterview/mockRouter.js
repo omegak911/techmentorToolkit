@@ -1,8 +1,8 @@
 import express from 'express';
 
-import { addQuestion, deleteQuestion, updateQuestion } from '../controllers/mockInterview/questionsCtrl';
-import { addStudent, deleteStudent, updateStudent } from '../controllers/mockInterview/studentsCtrl';
-import { addMentor, addBoss, updateStudentCollection, getEverything, } from '../controllers/mockInterview/landingCtrl';
+import { addQuestion, deleteQuestion, updateQuestion } from '../../controllers/mockInterview/questionsCtrl';
+import { addStudent, deleteStudent, updateStudent } from '../../controllers/mockInterview/studentsCtrl';
+import { addMentor, addBoss, updateStudentCollection, getEverything, } from '../../controllers/mockInterview/landingCtrl';
 
 const router = express.Router();
 

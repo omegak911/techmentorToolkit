@@ -1,16 +1,11 @@
 import express from 'express';
-import githubCtrl from './controllers/githubCtrl';
-import mockRouter from './routers/mockRouter';
+import mockInterviewRouter from './routers/mockInterview/router';
+import coldCallerAssistantRouter from './routers/coldCallerAssistantRouter';
 
 const router = express.Router();
 
 router
-  .use('/auth', authRouter) //need to link this to authRouter
-  .use(gateway) //need to link this to middleware
-  //get everything
-  .use('/mockInterview', mockRouter)
-
-router.route('/coldCallerAssistant')
-  .get(githubCtrl);
+  .use('/coldCallerAssistant', coldCallerAssistantRouter)
+  .use('/mockInterview', mockInterviewRouter);
 
 export default router;
