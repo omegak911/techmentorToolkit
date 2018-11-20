@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from './Nav';
 
 class MockInterviewToolkit extends Component {
   constructor(props) {
@@ -8,7 +9,13 @@ class MockInterviewToolkit extends Component {
     }
   }
 
+  componentDidMount() {
+    //apicall to determine authentication
+    //if not authenticated, redirect to Landing
+  }
+
   render() {
+    let { match } = this.props;
     return (
       <div>
     Login/Create
@@ -27,9 +34,23 @@ class MockInterviewToolkit extends Component {
     Submit
     - add student
     - add questions/category
+
+    state object to determine if Nav should be shown
+    {/* <Navbar />
+    <Route exact path={`${match.path}/`} component={Landing}/>
+
+    <Route path={`${match.path}/main`} component={Stats}/>
+    <Route path={`${match.path}/create`} component={CreationLan}/>
+    <Route path={`${match.path}/session`} component={Session}/> */}
       </div>
     )
   }
 }
+
+
+      // <Link to={`${match.url}/${id}`}>{name}</Link>
+
+      // <Route path={`${match.path}/:topicId`} component={Topic}/>
+
 
 export default MockInterviewToolkit;
