@@ -8,16 +8,24 @@ class MockInterviewToolkit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      username: '',
     }
+  }
+
+  updateUsername = (username) => {
+    let { match, history } = this.props;
+    this.setState({ username }, () => history.push(`${match.path}/home`));
+    //upon updating username, 
+
   }
 
   render() {
     let { match } = this.props;
+    let { username } = this.state;
     return (
       <div>
-        <Route exact path={`${match.path}/`} component={Landing}/>
-        <Route path="home" component={ProtectedRoutes}/>
+        <Route exact path={`${match.path}/`} component={() => <Landing updateUsername={this.updateUsername} />}/>
+        <Route path={`${match.path}/home`} component={() => <ProtectedRoutes match={match} username={username} />}/>
       </div>
     )
   }
