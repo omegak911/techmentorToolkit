@@ -16,7 +16,7 @@ router.route('/questions')
   .patch(updateQuestion)
   .delete(deleteQuestion);
 
-router.route('/login')
+router.route('/load')
   .get(getEverything);
 
 router.route('/mentor')
