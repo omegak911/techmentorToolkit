@@ -14,7 +14,8 @@ import {
 
 import {
   Create_PW,
-  Login_PW
+  Login_PW,
+  VALIDATOR
 } from '../../../config';
 
 const addMentor = (req, res) => {
@@ -39,11 +40,10 @@ const addBoss = (req, res) => {
   }
 }
 
-const loginValidator = (req, res) => { //sessions should use this
-  console.log(req.session) 
-  if (req.body.password === Login_PW) {
-    //if password is correct, update session object to indicate authenticated - to be used by gateway
-    req.status(200).send('success');
+const loginValidator = (req, res) => {
+  if (req.query.password === Login_PW) {
+    req.session.secret = VALIDATOR; //to be used by gateway
+    res.status(200).send('success');
   } else {
     res.status(404).send('error');
   }
