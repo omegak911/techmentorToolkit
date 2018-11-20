@@ -25,6 +25,10 @@ class Main extends Component {
           <Link to="/learnThemNames">Learn Them Names</Link>
           : Let's learn the names for HRLA26!
         </div>
+        <div>
+          <Link to="/mockInterview">Mock Interview</Link>
+          : Setup sessions + bank of questions
+        </div>
       </div>
     )
   }
