@@ -1,12 +1,8 @@
 import express from 'express';
-import {   
-  getEverything,
-  addStudent,
-  deleteStudent,
-  updateStudent,
-  addQuestion,
-  deleteQuestion,
-  updateQuestion} from '../controllers/mockCtrl';
+
+import { addQuestion, deleteQuestion, updateQuestion } from '../controllers/mockInterview/questionsCtrl';
+import { addStudent, deleteStudent, updateStudent } from '../controllers/mockInterview/studentsCtrl';
+import { addMentor, addBoss, updateStudentCollection, getEverything, } from '../controllers/mockInterview/landingCtrl';
 
 const router = express.Router();
 
@@ -20,7 +16,14 @@ router.route('/questions')
   .patch(updateQuestion)
   .delete(deleteQuestion);
 
-router.route('/load')
+router.route('/login')
   .get(getEverything);
+
+router.route('/mentor')
+  .patch(updateStudentCollection)
+  .post(addMentor);
+
+router.route('/admin')
+  .post(addBoss)
 
 export default router;
