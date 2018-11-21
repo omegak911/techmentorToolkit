@@ -9,6 +9,7 @@ import {
 import {
   addMentorHelper,
   addBossHelper,
+  getAdminHelper,
   updateStudentCollectionHelper
 } from '../../../database/helpers/mentorHelpers';
 
@@ -59,13 +60,27 @@ const updateStudentCollection = (req, res) => {
 }
 
 const getEverything = (req, res) => {
-  getAllStudentsHelper()
-    .then(studentData => {
-      getAllQuestionsHelper()
-        .then(questionData => res.status(201).send({ studentData, questionData }))
-        .catch(err => res.status(404).send('error'));
+  getAdminHelper()
+    .then(adminData => {
+      getAllStudentsHelper()
+      .then(studentData => {
+        getAllQuestionsHelper()
+          .then(questionData => res.status(201).send({ adminData, studentData, questionData }))
+          .catch(err => res.status(404).send('error'));
+      })
+      .catch(err => res.status(404).send('error'));
     })
-    .catch(err => res.status(404).send('error'));
+    .catch(err => res.status(404).send('error'))
+}
+
+const getMentorStudent = (req, res) => {
+  getAdminHelper()
+    .then(adminData => {
+      getAllStudentsHelper()
+      .then(studentData => res.status(201).send({ adminData, studentData }))
+      .catch(err => res.status(404).send('error'));
+    })
+    .catch(err => res.status(404).send('error'))
 }
 
 export {
@@ -74,4 +89,5 @@ export {
   loginValidator,
   updateStudentCollection,
   getEverything,
+  getMentorStudent,
 };
