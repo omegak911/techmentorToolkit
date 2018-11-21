@@ -11,7 +11,7 @@ class Stats extends Component {
   render() {
     return(
       <div>
-        Create
+        Stats
       </div>
     )
   }

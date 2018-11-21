@@ -23,8 +23,8 @@ class ProtectedRoutes extends Component {
     //or maybe match.url
     return (
       <div>
-        <Navbar />
-        <Route path={`${match.path}/main`} component={Stats}/>
+        <Navbar match={match}/>
+        <Route path={`${match.path}/home`} component={Stats}/>
         <Route path={`${match.path}/create`} component={CreationLab}/>
         <Route path={`${match.path}/session`} component={Session}/>
       </div>

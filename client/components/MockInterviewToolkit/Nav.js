@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Navbar = () =>
+const Navbar = (props) =>
   <StyledNavbar className="flexCenter">
-    <StyledNavOptions><Link to="/main">Stats</Link></StyledNavOptions>
-    <StyledNavOptions><Link to="/create">Create</Link></StyledNavOptions>
-    <StyledNavOptions><Link to="/session">Session</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/home`}>Stats</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/create`}>Create</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/session`}>Session</Link></StyledNavOptions>
   </StyledNavbar>
 
 const StyledNavbar = styled.div`
