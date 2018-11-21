@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Route } from 'react-router';
 
 import Navbar from './Nav';
@@ -15,12 +16,18 @@ class ProtectedRoutes extends Component {
   }
 
   componentDidMount() {
-    //check sessions, if not active, then redirect back to landing
+    let { history } = this.props;
+    axios
+      .get('/api/mockInterview/main/')
+      .then(({ data }) => console.log(data))
+      .catch((err) => { 
+        console.error(err);
+        history.push('/mockInterview');
+      });
   }
 
   render() {
     let { match } = this.props;
-    //or maybe match.url
     return (
       <div>
         <Navbar match={match}/>
