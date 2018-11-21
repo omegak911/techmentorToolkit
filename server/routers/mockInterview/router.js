@@ -9,6 +9,6 @@ const router = express.Router();
 router
   .use('/auth', mockAuthRouter)
   .use(gateway)
-  .use('/home', mockRouter);
+  .use('/main', mockRouter);
 
 export default router;

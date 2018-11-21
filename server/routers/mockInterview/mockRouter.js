@@ -6,6 +6,9 @@ import { addMentor, addBoss, updateStudentCollection, getEverything, } from '../
 
 const router = express.Router();
 
+router.route('/')
+  .get(getEverything);
+
 router.route('/student')
   .post(addStudent)
   .patch(updateStudent)
@@ -15,9 +18,6 @@ router.route('/questions')
   .post(addQuestion)
   .patch(updateQuestion)
   .delete(deleteQuestion);
-
-router.route('/load')
-  .get(getEverything);
 
 router.route('/mentor')
   .patch(updateStudentCollection)
