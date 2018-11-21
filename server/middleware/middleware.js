@@ -17,9 +17,10 @@ const corsOptions = {
 const sessionOptions = {
   secret: SECRET,
   cookie: { maxAge: 300000 },  //five minutes
-  resave: false,
+  resave: true,
   saveUninitialized: false,
-  store: new store({ mongooseConnection: db })
+  store: new store({ mongooseConnection: db }),
+  rolling: true
 };
 
 const middleware = [
