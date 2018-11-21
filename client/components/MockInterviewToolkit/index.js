@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 
 import Landing from './Landing';
-import ProtectedRoutes from './ProtectedRoutes';
+import ProtectedRoutes from './Components/ProtectedRoutes';
 
 class MockInterviewToolkit extends Component {
   constructor(props) {
@@ -20,12 +20,12 @@ class MockInterviewToolkit extends Component {
   }
 
   render() {
-    let { match, history } = this.props;
+    let { match } = this.props;
     let { username } = this.state;
     return (
       <div>
-        <Route exact path={`${match.path}/`} component={() => <Landing updateUsername={this.updateUsername} />}/>
-        <Route path={`${match.path}/home`} component={() => <ProtectedRoutes history={history} match={match} username={username} />}/>
+        <Route exact path={`${match.path}/`} render={() => <Landing updateUsername={this.updateUsername} />}/>
+        <Route path={`${match.path}/home`} render={(routeProps) => <ProtectedRoutes {...routeProps} username={username} />}/>
       </div>
     )
   }

@@ -4,9 +4,10 @@ import styled from 'styled-components';
 
 const Navbar = (props) =>
   <StyledNavbar className="flexCenter">
-    <StyledNavOptions><Link to={`${props.match.path}/home`}>Stats</Link></StyledNavOptions>
-    <StyledNavOptions><Link to={`${props.match.path}/create`}>Create</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/`}>Stats</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/create`}>CreationLab</Link></StyledNavOptions>
     <StyledNavOptions><Link to={`${props.match.path}/session`}>Session</Link></StyledNavOptions>
+    <StyledNavOptions><Link to={`${props.match.path}/admin`}>Admin</Link></StyledNavOptions>
   </StyledNavbar>
 
 const StyledNavbar = styled.div`

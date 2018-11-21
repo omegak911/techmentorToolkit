@@ -6,24 +6,32 @@ import Navbar from './Nav';
 import Stats from './Stats';
 import CreationLab from './CreationLab';
 import Session from './Session';
+import Admin from './Admin';
 
 class ProtectedRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      update: true,
     }
   }
 
   componentDidMount() {
     let { history } = this.props;
-    axios
-      .get('/api/mockInterview/main/')
-      .then(({ data }) => console.log(data))
-      .catch((err) => { 
-        console.error(err);
-        history.push('/mockInterview');
-      });
+    let { update } = this.state;
+    console.log(this.props);
+    if (update) {
+      axios
+        .get('/api/mockInterview/main/')
+        .then(({ data }) => { 
+          console.log(data)
+          this.setState({ update: false }, () => console.log(this.state));
+        })
+        .catch((err) => { 
+          console.error(err);
+          history.push('/mockInterview');
+        });
+    }
   }
 
   render() {
@@ -31,9 +39,10 @@ class ProtectedRoutes extends Component {
     return (
       <div>
         <Navbar match={match}/>
-        <Route path={`${match.path}/home`} component={Stats}/>
+        <Route exact path={`${match.path}/`} component={Stats}/>
         <Route path={`${match.path}/create`} component={CreationLab}/>
         <Route path={`${match.path}/session`} component={Session}/>
+        <Route path={`${match.path}/admin`} component={Admin}/>
       </div>
     )
   }

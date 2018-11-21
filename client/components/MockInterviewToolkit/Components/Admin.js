@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Stats extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
     this.state ={
@@ -11,10 +11,13 @@ class Stats extends Component {
   render() {
     return(
       <div>
-        Stats
+        Admin
+        add user
+
+        add student
       </div>
     )
   }
 }
 
-export default Stats;
+export default Admin;

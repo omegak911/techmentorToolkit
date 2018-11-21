@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CreationLab extends Component {
+class Session extends Component {
   constructor(props) {
     super(props);
     this.state ={
@@ -11,10 +11,14 @@ class CreationLab extends Component {
   render() {
     return(
       <div>
-        Create
+        Session
+
+        select Session
+
+        create Session
       </div>
     )
   }
 }
 
-export default CreationLab;
+export default Session;
