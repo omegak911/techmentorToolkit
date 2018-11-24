@@ -26,7 +26,6 @@ class Add extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { addType: endpoint } = this.state;
-    console.log('creating new person')
     axios
       .post(`/api/mockInterview/main/${endpoint}`, this.state)
       .then(this.props.updateMentorStudent)

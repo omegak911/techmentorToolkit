@@ -13,20 +13,21 @@ class ProtectedRoutes extends Component {
     super(props);
     this.state = {
       studentData: {},
-      mentorData: {},
+      adminData: {},
       questionData: {},
       initalLoadComplete: false
     }
   }
 
   componentDidMount() {
-    let { history } = this.props;
+    let { history, updateUsername } = this.props;
     axios
       .get('/api/mockInterview/main/')
-      .then(({ data }) => { 
-        console.log(data);
-        let { studentData, mentorData, questionData } = this.state;
-        this.setState({ studentData, mentorData, questionData, initalLoadComplete: true });
+      .then(({ data }) => {
+        let { studentData, adminData, questionData, username } = data;
+        updateUsername(username);
+        this.setState({ studentData, adminData, questionData, initalLoadComplete: true }, 
+          () => console.log(this.state));
       })
       .catch((err) => { 
         console.error(err);
@@ -49,7 +50,7 @@ class ProtectedRoutes extends Component {
 
   render() {
     let { match } = this.props;
-    let { studentData, mentorData, questionData, initalLoadComplete } = this.state;
+    let { studentData, adminData, questionData, initalLoadComplete } = this.state;
     return (
       <div>
         <Navbar match={match}/>
@@ -60,7 +61,7 @@ class ProtectedRoutes extends Component {
           path={`${match.path}/admin`} 
           render={() => <Admin
               studentData={studentData} 
-              mentorData={mentorData} 
+              adminData={adminData} 
               updateMentorStudent={this.updateMentorStudent}
               />} />
       </div>
