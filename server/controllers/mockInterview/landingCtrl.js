@@ -44,6 +44,7 @@ const addBoss = (req, res) => {
 const loginValidator = (req, res) => {
   if (req.query.password === Login_PW) {
     req.session.secret = VALIDATOR; //to be used by gateway
+    req.session.username = req.query.username;
     res.status(200).send('success');
   } else {
     res.status(404).send('error');
@@ -60,12 +61,13 @@ const updateStudentCollection = (req, res) => {
 }
 
 const getEverything = (req, res) => {
+  let { username } = req.session;
   getAdminHelper()
     .then(adminData => {
       getAllStudentsHelper()
       .then(studentData => {
         getAllQuestionsHelper()
-          .then(questionData => res.status(201).send({ adminData, studentData, questionData }))
+          .then(questionData => res.status(201).send({ adminData, studentData, questionData, username }))
           .catch(err => res.status(404).send('error'));
       })
       .catch(err => res.status(404).send('error'));
