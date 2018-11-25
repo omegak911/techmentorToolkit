@@ -27,7 +27,7 @@ class MockInterviewToolkit extends Component {
               {(provider) =>
                 <ProtectedRoutes
                   {...routeProps}
-                  updateUsername={provider.updateUsername} 
+                  initialLoadUpdate={provider.initialLoadUpdate} 
                 />
               }
             </Context.Consumer>
