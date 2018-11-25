@@ -28,7 +28,7 @@ class Add extends Component {
     let { addType: endpoint } = this.state;
     axios
       .post(`/api/mockInterview/main/${endpoint}`, this.state)
-      .then(this.props.updateMentorStudent)
+      .then(this.props.updateAdminStudent)
       .catch(err => console.error(err));
 
     e.target.reset();
