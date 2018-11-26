@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
 
 import Context from '../../Provider/Context';
-import styled from 'styled-components';
 
 class Assign extends Component {
   constructor(props) {
@@ -10,6 +11,20 @@ class Assign extends Component {
       assigned: [],
       unassigned: []
     }
+  }
+
+  addAssignment = (studentId, assignedStudentsObj, name) => {
+    let studentsObj = {...assignedStudentsObj};
+    studentsObj[studentId] = true;
+
+    axios
+      .patch('/api/mockInterview/main/mentor/', { name, studentId })
+      .then(() => console.log('function to update provider assignedStudentsObj, assignedStudents, and remainingStudents'))
+      .catch(() => console.error('error'))
+  }
+
+  removeAssignment = () => {
+
   }
 
   render() {
@@ -22,17 +37,23 @@ class Assign extends Component {
                 Your Students
                 {provider.state.assignedStudents.map(student =>
                   <div key={student._id}>
+                    <button>
+                      unassign
+                    </button>
                     {student.name}
                   </div>
                 )}
               </StyledFlexCol>
               <StyledFlexCol>
-              Other Students
-              {provider.state.remainingStudents.map(student =>
-                <div key={student._id}>
-                  {student.name}
-                </div>
-              )}
+                Other Students
+                {provider.state.remainingStudents.map(student =>
+                  <div key={student._id}>
+                    <button onClick={() => this.addAssignment(student._id, provider.state.assignedStudentsObj, provider.state.username)}>
+                        assign
+                      </button>
+                      {student.name}
+                  </div>
+                )}
               </StyledFlexCol>
             </StyledFlexRow>
           }
