@@ -6,8 +6,7 @@ const addBossHelper = name => new Mentor({ name, 'students.adminLvl': 'boss' }).
 
 const getAdminHelper = () => Mentor.find({});
 
-const updateStudentCollectionHelper = (name, studentCollection) => Mentor.updateOne({ name }, { $set: { [studentCollection] : true }});
-
+const updateStudentCollectionHelper = (name, studentCollection) => Mentor.updateOne({ name }, { $set: { [studentCollection]: true }});
 
 export {
   addMentorHelper,
