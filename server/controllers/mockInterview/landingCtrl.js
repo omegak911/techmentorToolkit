@@ -54,10 +54,13 @@ const loginValidator = (req, res) => {
 const updateStudentCollection = (req, res) => {
   //provides name and string in the format of 'students.adminLvl[studentId]'
   let { name, studentId } = req.body;
-  let studentCollection = `students.adminLvl.${studentId}`;
+  let studentCollection = `students.${studentId}`;
   updateStudentCollectionHelper(name, studentCollection)
     .then(() => res.status(201).send('success'))
-    .catch(() => res.status(404).send('error'));
+    .catch((err) => { 
+      console.error(err)
+      res.status(404).send('error')
+    });
 }
 
 const getEverything = (req, res) => {
