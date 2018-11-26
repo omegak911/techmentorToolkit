@@ -11,35 +11,36 @@ class Provider extends Component {
       questionData: {},
       studentData: {},
       username: '',
+      assignedStudentsObj: {},
       assignedStudents: [],
       remainingStudents: []
     }
   }
 
   initialLoadUpdate = (adminData, studentData, questionData, username ) => {
-    let [assignedStudents, remainingStudents] = this.filterStudents(adminData, studentData, username);
-    this.setState({ adminData, studentData, questionData, username, assignedStudents, remainingStudents });
+    let { assignedStudentsObj, assignedStudents, remainingStudents } = this.filterStudents(adminData, studentData, username);
+    this.setState({ adminData, studentData, questionData, username, assignedStudentsObj, assignedStudents, remainingStudents });
   }
 
   filterStudents = (adminData, studentData, username) => {
     let assignedStudents = [];
     let remainingStudents = [];
-    let adminStudents = {};
+    let assignedStudentsObj = {};
     for (let i = 0; i < adminData.length; i++) {
       if (adminData[i].username === username) {
-        adminStudents = adminData[i].students;
+        assignedStudentsObj = adminData[i].students;
       }
     }
 
     for (let k = 0; k < studentData.length; k++) {
-      if (adminStudents[studentData[k].id]) {
+      if (assignedStudentsObj[studentData[k].id]) {
         assignedStudents.push(studentData[k]);
       } else {
         remainingStudents.push(studentData[k]);
       }
     }
 
-    return [assignedStudents, remainingStudents];
+    return { assignedStudentsObj, assignedStudents, remainingStudents};
   }
 
   updateAdminStudent = () => {
@@ -47,7 +48,8 @@ class Provider extends Component {
       .get('/api/mockInterview/main/mentor/')
       .then(({ data }) => {
         let { adminData, studentData } = data;
-        this.setState({ adminData, studentData }, () => console.log(this.state));
+        let { assignedStudentsObj, assignedStudents, remainingStudents } = this.filterStudents(adminData, studentData, username);
+        this.setState({ adminData, studentData, assignedStudentsObj, assignedStudents, remainingStudents }, () => console.log(this.state));
       })
       .catch((err) => { 
         console.error(err);
