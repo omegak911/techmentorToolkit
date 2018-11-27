@@ -18,12 +18,6 @@ class Provider extends Component {
   }
 
   initialLoadUpdate = (adminData, studentData, questionData, username ) => {
-    // let { 
-    //   assignedStudentsObj, 
-    //   assignedStudents, 
-    //   remainingStudents 
-    // } = this.filterStudents(adminData, studentData, username);
-
     let assignedStudentsObj = this.createAssignedStudentObj(adminData, username);
     let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
 
@@ -36,27 +30,6 @@ class Provider extends Component {
       assignedStudents, 
       remainingStudents }, () => console.log(this.state));
   }
-
-  // filterStudents = (adminData, studentData, username) => {
-  //   let assignedStudents = [];
-  //   let remainingStudents = [];
-  //   let assignedStudentsObj = {};
-  //   for (let i = 0; i < adminData.length; i++) {
-  //     if (adminData[i].name === username) {
-  //       assignedStudentsObj = adminData[i].students;
-  //     }
-  //   }
-
-  //   for (let k = 0; k < studentData.length; k++) {
-  //     if (assignedStudentsObj[studentData[k]._id]) {
-  //       assignedStudents.push(studentData[k]);
-  //     } else {
-  //       remainingStudents.push(studentData[k]);
-  //     }
-  //   }
-
-  //   return { assignedStudentsObj, assignedStudents, remainingStudents };
-  // }
 
   createAssignedStudentObj = (adminData, username = this.state.username) => {
     console.log('createAssignedStudentObj username: ', username);
@@ -85,16 +58,14 @@ class Provider extends Component {
     return { assignedStudents, remainingStudents };
   }
 
-  updateAdminStudent = () => {
+  updateAdminStudent = () => { //we need the update to be an API call because we need the DB IDs
     console.log('updateAdminStudent');
     axios
       .get('/api/mockInterview/main/mentor/')
       .then(({ data }) => {
         let { adminData, studentData } = data;
-        let { assignedStudentsObj, assignedStudents, remainingStudents } = this.filterStudents(adminData, studentData, username);
-        
-        // let { assignedStudentsObj } = this.createAssignStudentObj(adminData, )
-        
+        let assignedStudentsObj = this.createAssignedStudentObj(adminData);
+        let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
         this.setState({ adminData, studentData, assignedStudentsObj, assignedStudents, remainingStudents }, () => console.log(this.state));
       })
       .catch((err) => { 
