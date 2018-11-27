@@ -36,23 +36,23 @@ class Assign extends Component {
               <StyledFlexCol>
                 Your Students
                 {provider.state.assignedStudents.map(student =>
-                  <div key={student._id}>
+                  <StyledFloatLeft key={student._id}>
                     <button>
                       unassign
                     </button>
-                    {student.name}
-                  </div>
+                    {` ${student.name}`}
+                  </StyledFloatLeft>
                 )}
               </StyledFlexCol>
               <StyledFlexCol>
                 Other Students
                 {provider.state.remainingStudents.map(student =>
-                  <div key={student._id}>
+                  <StyledFloatLeft key={student._id}>
                     <button onClick={() => this.addAssignment(student._id, provider.state.assignedStudentsObj, provider.state.username)}>
                         assign
                       </button>
-                      {student.name}
-                  </div>
+                      {` ${student.name}`}
+                  </StyledFloatLeft>
                 )}
               </StyledFlexCol>
             </StyledFlexRow>
@@ -74,6 +74,12 @@ const StyledFlexCol = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
+`
+
+const StyledFloatLeft = styled.div`
+  margin-left: 0;
+  margin-right: auto;
 `
 
 export default Assign;
