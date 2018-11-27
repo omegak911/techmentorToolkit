@@ -74,10 +74,12 @@ class Provider extends Component {
       });
   }
 
-  updateAssignedStudentObj = (assignedStudentsObj) => {
-
-
-
+  updateAssignment = (studentId) => { //no need for api call since we're using existing data
+    let { studentData } = this.state;
+    let assignedStudentsObj = {...this.state.assignedStudentsObj};
+    assignedStudentsObj[studentId] = true;
+    let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
+    this.setState({ assignedStudentsObj, assignedStudents, remainingStudents }, () => console.log(this.state));
   }
 
   render() {
@@ -87,6 +89,7 @@ class Provider extends Component {
           state: this.state,
           initialLoadUpdate: this.initialLoadUpdate,
           updateAdminStudent: this.updateAdminStudent,
+          updateAssignment: this.updateAssignment,
         }} >
         {this.props.children}
       </Context.Provider>
