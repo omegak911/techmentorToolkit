@@ -18,8 +18,20 @@ class Provider extends Component {
   }
 
   initialLoadUpdate = (adminData, studentData, questionData, username ) => {
-    let { assignedStudentsObj, assignedStudents, remainingStudents } = this.filterStudents(adminData, studentData, username);
-    this.setState({ adminData, studentData, questionData, username, assignedStudentsObj, assignedStudents, remainingStudents });
+    let { 
+      assignedStudentsObj, 
+      assignedStudents, 
+      remainingStudents 
+    } = this.filterStudents(adminData, studentData, username);
+
+    this.setState({ 
+      adminData, 
+      studentData, 
+      questionData, 
+      username, 
+      assignedStudentsObj, 
+      assignedStudents, 
+      remainingStudents }, () => console.log(this.state));
   }
 
   filterStudents = (adminData, studentData, username) => {
@@ -27,20 +39,20 @@ class Provider extends Component {
     let remainingStudents = [];
     let assignedStudentsObj = {};
     for (let i = 0; i < adminData.length; i++) {
-      if (adminData[i].username === username) {
+      if (adminData[i].name === username) {
         assignedStudentsObj = adminData[i].students;
       }
     }
 
     for (let k = 0; k < studentData.length; k++) {
-      if (assignedStudentsObj[studentData[k].id]) {
+      if (assignedStudentsObj[studentData[k]._id]) {
         assignedStudents.push(studentData[k]);
       } else {
         remainingStudents.push(studentData[k]);
       }
     }
 
-    return { assignedStudentsObj, assignedStudents, remainingStudents};
+    return { assignedStudentsObj, assignedStudents, remainingStudents };
   }
 
   updateAdminStudent = () => {
