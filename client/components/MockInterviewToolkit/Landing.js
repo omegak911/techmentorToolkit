@@ -19,11 +19,12 @@ class Landing extends Component {
   handleLogin = (e) => {
     e.preventDefault();
     let { username, password } = this.state;
-    let { updateUsername } = this.props;
+    let { proceedToHome } = this.props;
     this.setState({ username: '', password: '' });
     let query = {
       params: {
         password,
+        username,
       }
     }
 
@@ -31,7 +32,7 @@ class Landing extends Component {
       .get('/api/mockInterview/auth', query)
       .then(({ data }) => {
         if (data === 'success') {
-          updateUsername(username);
+          proceedToHome();
         } else {
           this.setState({ incorrect: true });
         }
@@ -47,7 +48,7 @@ class Landing extends Component {
 
         <form action="" onSubmit={this.handleLogin}>
           <input type="text" name="username" value={username} placeholder="username" onChange={this.handleChange}/>
-          <input type="text" name="password" value={password} placeholder="password" onChange={this.handleChange}/>
+          <input type="password" name="password" value={password} placeholder="password" onChange={this.handleChange}/>
           <button type="submit">Login</button>
         </form>
         {incorrect && <div>Invalid username/password</div>}

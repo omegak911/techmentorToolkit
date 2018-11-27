@@ -6,32 +6,32 @@ import Navbar from './Nav';
 import Stats from './Stats';
 import CreationLab from './CreationLab';
 import Session from './Session';
-import Admin from './Admin';
+import Admin from './Admin/Admin';
 
 class ProtectedRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      update: true,
     }
   }
 
   componentDidMount() {
-    let { history } = this.props;
-    let { update } = this.state;
-    console.log(this.props);
-    if (update) {
-      axios
-        .get('/api/mockInterview/main/')
-        .then(({ data }) => { 
-          console.log(data)
-          this.setState({ update: false }, () => console.log(this.state));
-        })
-        .catch((err) => { 
-          console.error(err);
-          history.push('/mockInterview');
-        });
-    }
+    this.getEverything();
+  }
+
+  getEverything = () => {
+    console.log('ProtectedRoutes getEverything')
+    let { history, initialLoadUpdate } = this.props;
+    axios
+      .get('/api/mockInterview/main/')
+      .then(({ data }) => {
+        let { adminData, studentData, questionData, username } = data;
+        initialLoadUpdate(adminData, studentData, questionData, username);
+      })
+      .catch((err) => { 
+        console.error(err);
+        history.push('/mockInterview');
+      });
   }
 
   render() {
@@ -42,7 +42,7 @@ class ProtectedRoutes extends Component {
         <Route exact path={`${match.path}/`} component={Stats}/>
         <Route path={`${match.path}/create`} component={CreationLab}/>
         <Route path={`${match.path}/session`} component={Session}/>
-        <Route path={`${match.path}/admin`} component={Admin}/>
+        <Route path={`${match.path}/admin`} component={Admin} />
       </div>
     )
   }

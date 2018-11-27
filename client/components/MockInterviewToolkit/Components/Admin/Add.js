@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
 
-class Admin extends Component {
+class Add extends Component {
   constructor(props) {
     super(props);
-    this.state ={
+    this.state = {
       addType: null,
       name: '',
       cohort: '',
@@ -23,23 +25,19 @@ class Admin extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    //route to the right place depending on addType
-    //upon completion or failure, change fields back to blank
-    let { addType: endpoint, name, cohort, password } = this.state;
+    let { addType: endpoint } = this.state;
+    axios
+      .post(`/api/mockInterview/main/${endpoint}`, this.state)
+      .then(this.props.updateAdminStudent)
+      .catch(err => console.error(err));
 
-    
-
-  //     .get('/api/mockInterview/main/') student/mentor/admin
-  //student needs name and cohort
-  //mentor/admin needs name and password
     e.target.reset();
   }
 
   render() {
     let { addType } = this.state;
-    return(
-      <div>
+    return (
+      <StyledCenter>
         Admin
         <div>
           Add a...
@@ -48,18 +46,33 @@ class Admin extends Component {
           <button type="button" name="admin" onClick={this.handleAddTypeButton}>Admin</button>
         </div>
         {addType &&
-          <div>
-            <form action="" onChange={this.handleChange} onSubmit={this.handleSubmit}>
+          <StyledCenter>
+            <br />
+            <StyledForm action="" onChange={this.handleChange} onSubmit={this.handleSubmit}>
               <input type="text" name="name" placeholder="name"/>
               {addType === 'student' && <input type="text" name="cohort" placeholder="cohort"/>}
-              <input type="password" name="password" placeholder="authorization password"/>
+              {addType !== 'student' && <input type="password" name="password" placeholder="authorization password"/>}
               <button type="submit">submit</button>
-            </form>
-          </div>
+            </StyledForm>
+          </StyledCenter>
         }
-      </div>
+      </StyledCenter>
     )
   }
 }
 
-export default Admin;
+const StyledCenter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export default Add;

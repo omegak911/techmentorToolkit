@@ -9,6 +9,7 @@ import {
 import {
   addMentorHelper,
   addBossHelper,
+  getAdminHelper,
   updateStudentCollectionHelper
 } from '../../../database/helpers/mentorHelpers';
 
@@ -43,6 +44,7 @@ const addBoss = (req, res) => {
 const loginValidator = (req, res) => {
   if (req.query.password === Login_PW) {
     req.session.secret = VALIDATOR; //to be used by gateway
+    req.session.username = req.query.username;
     res.status(200).send('success');
   } else {
     res.status(404).send('error');
@@ -52,20 +54,38 @@ const loginValidator = (req, res) => {
 const updateStudentCollection = (req, res) => {
   //provides name and string in the format of 'students.adminLvl[studentId]'
   let { name, studentId } = req.body;
-  let studentCollection = `students.adminLvl.${studentId}`;
+  let studentCollection = `students.${studentId}`;
   updateStudentCollectionHelper(name, studentCollection)
     .then(() => res.status(201).send('success'))
-    .catch(() => res.status(404).send('error'));
+    .catch((err) => { 
+      console.error(err)
+      res.status(404).send('error')
+    });
 }
 
 const getEverything = (req, res) => {
-  getAllStudentsHelper()
-    .then(studentData => {
-      getAllQuestionsHelper()
-        .then(questionData => res.status(201).send({ studentData, questionData }))
-        .catch(err => res.status(404).send('error'));
+  let { username } = req.session;
+  getAdminHelper()
+    .then(adminData => {
+      getAllStudentsHelper()
+      .then(studentData => {
+        getAllQuestionsHelper()
+          .then(questionData => res.status(201).send({ adminData, studentData, questionData, username }))
+          .catch(err => res.status(404).send('error'));
+      })
+      .catch(err => res.status(404).send('error'));
     })
-    .catch(err => res.status(404).send('error'));
+    .catch(err => res.status(404).send('error'))
+}
+
+const getMentorStudent = (req, res) => {
+  getAdminHelper()
+    .then(adminData => {
+      getAllStudentsHelper()
+      .then(studentData => res.status(201).send({ adminData, studentData }))
+      .catch(err => res.status(404).send('error'));
+    })
+    .catch(err => res.status(404).send('error'))
 }
 
 export {
@@ -74,4 +94,5 @@ export {
   loginValidator,
   updateStudentCollection,
   getEverything,
+  getMentorStudent,
 };
