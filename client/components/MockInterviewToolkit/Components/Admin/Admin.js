@@ -32,7 +32,12 @@ class Admin extends Component {
         }
         {mode === 'Assign' && 
           <Context.Consumer>
-            {(provider) => <Assign adminData={provider.adminData} studentData={provider.studentData} />}
+            {(provider) => 
+              <Assign 
+                adminData={provider.adminData} 
+                studentData={provider.studentData} 
+                updateAssignment={provider.updateAssignment}
+              />}
           </Context.Consumer>
         }
       </div>

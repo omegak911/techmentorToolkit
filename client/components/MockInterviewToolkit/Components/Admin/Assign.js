@@ -13,18 +13,11 @@ class Assign extends Component {
     }
   }
 
-  addAssignment = (studentId, assignedStudentsObj, name) => {
-    let studentsObj = {...assignedStudentsObj};
-    studentsObj[studentId] = true;
-
+  addAssignment = (studentId, name) => {
     axios
       .patch('/api/mockInterview/main/mentor/', { name, studentId })
-      .then(() => console.log('function to update provider assignedStudentsObj, assignedStudents, and remainingStudents'))
+      .then(() => this.props.updateAssignment(studentId))
       .catch(() => console.error('error'))
-  }
-
-  removeAssignment = () => {
-
   }
 
   render() {
@@ -48,7 +41,7 @@ class Assign extends Component {
                 Other Students
                 {provider.state.remainingStudents.map(student =>
                   <StyledFloatLeft key={student._id}>
-                    <button onClick={() => this.addAssignment(student._id, provider.state.assignedStudentsObj, provider.state.username)}>
+                    <button onClick={() => this.addAssignment(student._id, provider.state.username)}>
                         assign
                       </button>
                       {` ${student.name}`}
