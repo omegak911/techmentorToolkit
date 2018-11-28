@@ -10,7 +10,8 @@ import {
   addMentorHelper,
   addBossHelper,
   getAdminHelper,
-  updateStudentCollectionHelper
+  updateStudentCollectionHelper,
+  removeFromStudentCollectionHelper
 } from '../../../database/helpers/mentorHelpers';
 
 import {
@@ -63,6 +64,17 @@ const updateStudentCollection = (req, res) => {
     });
 }
 
+const removeFromStudentCollection = (req, res) => {
+  let { name, studentId } = req.body;
+  let studentCollection = `students.${studentId}`;
+  removeFromStudentCollectionHelper(name, studentCollection)
+    .then(() => res.status(201).send('success'))
+    .catch((err) => { 
+      console.error(err)
+      res.status(404).send('error')
+    });
+}
+
 const getEverything = (req, res) => {
   let { username } = req.session;
   getAdminHelper()
@@ -93,6 +105,7 @@ export {
   addBoss,
   loginValidator,
   updateStudentCollection,
+  removeFromStudentCollection,
   getEverything,
   getMentorStudent,
 };
