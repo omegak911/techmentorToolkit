@@ -16,7 +16,20 @@ class Assign extends Component {
   addAssignment = (studentId, name) => {
     axios
       .patch('/api/mockInterview/main/mentor/', { name, studentId })
-      .then(() => this.props.updateAssignment(studentId))
+      .then(() => this.props.updateAssignment(studentId, 'add'))
+      .catch(() => console.error('error'))
+  }
+
+  removeAssignment = (studentId, name) => {
+    let params = {
+      data: {
+        name,
+        studentId
+      }
+    }
+    axios
+      .delete('/api/mockInterview/main/mentor/', params)
+      .then(() => this.props.updateAssignment(studentId, 'delete'))
       .catch(() => console.error('error'))
   }
 
@@ -30,7 +43,7 @@ class Assign extends Component {
                 Your Students
                 {provider.state.assignedStudents.map(student =>
                   <StyledFloatLeft key={student._id}>
-                    <button>
+                    <button onClick={() => this.removeAssignment(student._id, provider.state.username)}>
                       unassign
                     </button>
                     {` ${student.name}`}
