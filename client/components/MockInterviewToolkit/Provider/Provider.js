@@ -74,10 +74,15 @@ class Provider extends Component {
       });
   }
 
-  updateAssignment = (studentId) => { //no need for api call since we're using existing data
+  updateAssignment = (studentId, type) => { //no need for api call since we're using existing data
     let { studentData } = this.state;
     let assignedStudentsObj = {...this.state.assignedStudentsObj};
-    assignedStudentsObj[studentId] = true;
+    if (type === 'add') {
+      assignedStudentsObj[studentId] = true;
+    } else if (type === 'delete') {
+      delete assignedStudentsObj[studentId];
+    }
+
     let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
     this.setState({ assignedStudentsObj, assignedStudents, remainingStudents }, () => console.log(this.state));
   }
