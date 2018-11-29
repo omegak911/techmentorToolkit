@@ -2,7 +2,8 @@ import session from 'supertest-session';
 import app from '../../server/index';
 import { Login_PW } from '../../config';
 
-var testSession = null;
+let testSession = null;
+const errorMsg = () => { throw new Error() };
 
 beforeEach(() => {
   testSession = session(app);
@@ -40,5 +41,15 @@ describe('Authentication', () => {
         return done();
       })
   });
-  
+
+  test('it should accept a request after auth + send back data', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect((res) => {
+        let { adminData, studentData, questionData } = res.body;
+        if (adminData && studentData && questionData) return;
+        errorMsg();
+      })
+      .end(done);
+  });
 })

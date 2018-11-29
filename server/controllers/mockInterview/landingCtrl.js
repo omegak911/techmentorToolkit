@@ -82,7 +82,7 @@ const getEverything = (req, res) => {
       getAllStudentsHelper()
       .then(studentData => {
         getAllQuestionsHelper()
-          .then(questionData => res.status(201).send({ adminData, studentData, questionData, username }))
+          .then(questionData => res.status(200).send({ adminData, studentData, questionData, username }))
           .catch(err => res.status(404).send('error'));
       })
       .catch(err => res.status(404).send('error'));
