@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/entry.js --ignore client/",
-    "test": "jest",
+    "test": "NODE_ENV=jest jest",
     "build:watch": "webpack -w",
     "build:server": "webpack-dev-server --hot --inline"
   },
