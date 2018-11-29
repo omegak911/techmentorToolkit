@@ -14,3 +14,5 @@ app.use('/api', router);
 app.use('*', (req, res) => res.sendFile(path.resolve(__dirname, '../client/dist/index.html')));
 
 app.listen(port, () => console.log(`server is listening on port ${port}`));
+
+export default app;
