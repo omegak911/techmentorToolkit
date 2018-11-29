@@ -1,5 +1,5 @@
 import session from 'supertest-session';
-import app from '../../server/index';
+import app from '../../server';
 import { Login_PW } from '../../config';
 
 let testSession = null;
@@ -9,7 +9,7 @@ beforeEach(() => {
   testSession = session(app);
 });
 
-describe('Authentication', () => {
+describe('Authentication #1: ', () => {
   test('it should decline request if password is incorrect', (done) => {
     testSession.get('/api/mockInterview/auth/?password=fakepassword&username=jest')
       .expect(404)
@@ -29,15 +29,12 @@ describe('Authentication', () => {
   });
 })
 
-describe('Authentication', () => {
-  var authenticatedSession = null;
-
+describe('Authentication #2: ', () => {
   beforeEach((done) => {
     testSession.get(`/api/mockInterview/auth/?password=${Login_PW}&username=jest`)
       .expect(200)
       .end((err) => {
         if (err) return done(err);
-        authenticatedSession = testSession;
         return done();
       })
   });
