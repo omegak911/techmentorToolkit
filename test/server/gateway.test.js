@@ -3,7 +3,9 @@ import app from '../../server';
 import { Login_PW } from '../../config';
 
 let testSession = null;
-const errorMsg = () => { throw new Error() };
+const errorMsg = (expected = 'EXPECTED', actual = 'ACTUAL') => { 
+  throw new Error(`expected ${expected}, but got ${actual}`);
+};
 
 beforeEach(() => {
   testSession = session(app);
@@ -45,7 +47,7 @@ describe('Authentication #2: ', () => {
       .expect((res) => {
         let { adminData, studentData, questionData } = res.body;
         if (adminData && studentData && questionData) return;
-        errorMsg();
+        errorMsg('adminData + studentData + questionData', 'false');
       })
       .end(done);
   });
