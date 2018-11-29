@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/entry.js --ignore client/",
+    "test": "jest",
     "build:watch": "webpack -w",
     "build:server": "webpack-dev-server --hot --inline"
   },
@@ -19,6 +20,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "helmet": "^3.15.0",
+    "jest": "^23.6.0",
     "mongoose": "^5.3.12",
     "nodemon": "^1.18.4",
     "react": "^16.5.2",
@@ -26,6 +28,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "styled-components": "^4.0.0",
+    "supertest-session": "^3.3.0",
     "webpack": "^4.20.2",
     "webpack-dev-server": "^3.1.9"
   },
