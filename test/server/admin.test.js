@@ -8,13 +8,16 @@ const errorMsg = (expected = 'EXPECTED', actual = 'ACTUAL') => {
   throw new Error(`expected ${expected}, but got ${actual}`);
 };
 
-beforeEach((done) => {
+beforeAll((done) => {
   testSession = session(app);
   testSession.get(`/api/mockInterview/auth/?password=${Login_PW}&username=jest`)
     .expect(200)
     .end((err) => {
       if (err) return done(err);
-      return done();
+      testSession.post('/api/mockInterview/main/mentor')
+      .send({ name: 'jest', password: Create_PW })
+      .expect(201)
+      .end(done);
     })
 })
 
@@ -23,14 +26,7 @@ afterAll(async(done) => {
   done();
 })
 
-describe('Mentor #1: ', () => {
-  test('it should receive 201 on successful POST', (done) => {
-    testSession.post('/api/mockInterview/main/mentor')
-      .send({ name: 'jest', password: Create_PW })
-      .expect(201)
-      .end(done);
-  });
-
+describe('Admin #1: ', () => {
   test('it should create the mentor', (done) => {
     testSession.get('/api/mockInterview/main/')
       .expect(200)
@@ -43,7 +39,7 @@ describe('Mentor #1: ', () => {
   });
 })
 
-describe('Mentor #1: ', () => {
+describe('Admin #2: ', () => {
   test('it should receive 201 on successful POST', (done) => {
     testSession.post('/api/mockInterview/main/admin')
       .send({ name: 'jest', password: Create_PW })
@@ -51,13 +47,12 @@ describe('Mentor #1: ', () => {
       .end(done);
   });
 
-  test('it should create the mentor', (done) => {
+  test('it should create an admin with lvl of "boss"', (done) => {
     testSession.get('/api/mockInterview/main/')
       .expect(200)
       .expect(res => {
         let { adminData } = res.body;
         let mentor = adminData[adminData.length - 1];
-        console.log(mentor)
         if (mentor.name !== 'jest' || mentor.students.adminLvl !== 'boss') errorMsg('jest + boss', `${mentor.name} + ${mentor.students.adminLvl}`);
       })
       .end(done);
