@@ -15,20 +15,14 @@ class Assign extends Component {
 
   addAssignment = (studentId, name) => {
     axios
-      .patch('/api/mockInterview/main/mentor/', { name, studentId })
+      .patch('/api/mockInterview/main/mentor/', { name, studentId, type: 'add' })
       .then(() => this.props.updateAssignment(studentId, 'add'))
       .catch(() => console.error('error'))
   }
 
   removeAssignment = (studentId, name) => {
-    let params = {
-      data: {
-        name,
-        studentId
-      }
-    }
     axios
-      .delete('/api/mockInterview/main/mentor/', params)
+      .patch('/api/mockInterview/main/mentor/',  { name, studentId, type: 'delete' })
       .then(() => this.props.updateAssignment(studentId, 'delete'))
       .catch(() => console.error('error'))
   }

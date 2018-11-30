@@ -2,7 +2,7 @@ import express from 'express';
 
 import { addQuestion, deleteQuestion, updateQuestion } from '../../controllers/mockInterview/questionsCtrl';
 import { addStudent, deleteStudent, updateStudent } from '../../controllers/mockInterview/studentsCtrl';
-import { addMentor, addBoss, updateStudentCollection, removeFromStudentCollection, getEverything, getMentorStudent } from '../../controllers/mockInterview/landingCtrl';
+import { addMentor, addBoss, updateStudentCollection, getEverything, getMentorStudent } from '../../controllers/mockInterview/landingCtrl';
 
 const router = express.Router();
 
@@ -22,7 +22,6 @@ router.route('/questions')
 router.route('/mentor')
   .get(getMentorStudent)
   .patch(updateStudentCollection)
-  .delete(removeFromStudentCollection)
   .post(addMentor);
 
 router.route('/admin')
