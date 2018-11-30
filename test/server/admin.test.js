@@ -19,7 +19,7 @@ beforeEach((done) => {
 })
 
 afterAll(async(done) => {
-  await Mentor.deleteOne({ name: 'jest' });
+  await Mentor.deleteMany({ name: 'jest' });
   done();
 })
 
@@ -38,6 +38,27 @@ describe('Mentor #1: ', () => {
         let { adminData } = res.body;
         let mentor = adminData[adminData.length - 1];
         if (mentor.name !== 'jest') errorMsg('jest', mentor.name);
+      })
+      .end(done);
+  });
+})
+
+describe('Mentor #1: ', () => {
+  test('it should receive 201 on successful POST', (done) => {
+    testSession.post('/api/mockInterview/main/admin')
+      .send({ name: 'jest', password: Create_PW })
+      .expect(201)
+      .end(done);
+  });
+
+  test('it should create the mentor', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect(res => {
+        let { adminData } = res.body;
+        let mentor = adminData[adminData.length - 1];
+        console.log(mentor)
+        if (mentor.name !== 'jest' || mentor.students.adminLvl !== 'boss') errorMsg('jest + boss', `${mentor.name} + ${mentor.students.adminLvl}`);
       })
       .end(done);
   });
