@@ -23,6 +23,7 @@ beforeAll((done) => {
 
 afterAll(async(done) => {
   await Mentor.deleteMany({ name: 'jest' });
+  await Mentor.deleteMany({ name: 'jestBoss' });
   done();
 })
 
@@ -42,7 +43,7 @@ describe('Admin #1: ', () => {
 describe('Admin #2: ', () => {
   test('it should receive 201 on successful POST', (done) => {
     testSession.post('/api/mockInterview/main/admin')
-      .send({ name: 'jest', password: Create_PW })
+      .send({ name: 'jestBoss', password: Create_PW })
       .expect(201)
       .end(done);
   });
@@ -53,8 +54,28 @@ describe('Admin #2: ', () => {
       .expect(res => {
         let { adminData } = res.body;
         let mentor = adminData[adminData.length - 1];
-        if (mentor.name !== 'jest' || mentor.students.adminLvl !== 'boss') errorMsg('jest + boss', `${mentor.name} + ${mentor.students.adminLvl}`);
+        if (mentor.name !== 'jestBoss' || mentor.students.adminLvl !== 'boss') errorMsg('jest + boss', `${mentor.name} + ${mentor.students.adminLvl}`);
       })
       .end(done);
   });
+})
+
+describe('Admin #3: ', () => {
+  test('it should respond with 204 on successful patch', (done) => {
+    testSession.patch('/api/mockInterview/main/mentor')
+      .send({ name: 'jest', studentId: 'jestStudent', type: 'add' })
+      .expect(204)
+      .end(done);
+  });
+
+  test('add a student Id to a mentor\'s student collection', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect(res => {
+        let { adminData } = res.body;
+        let mentor = adminData[adminData.length - 2]; //cuz jestBoss should be the last
+        if (!mentor.students.jestStudent) errorMsg('students.jestStudent: true', `${mentor.students}`);
+      })
+      .end(done);
+  });  
 })
