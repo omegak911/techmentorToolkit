@@ -59,7 +59,7 @@ const updateStudentCollection = (req, res) => {
   let updateHelper = type === 'add' ? addToStudentCollectionHelper : removeFromStudentCollectionHelper;
 
   updateHelper(name, studentCollection)
-    .then(() => res.status(201).send('success'))
+    .then(() => res.status(204).send('success'))
     .catch((err) => { 
       console.error(err)
       res.status(404).send('error')
