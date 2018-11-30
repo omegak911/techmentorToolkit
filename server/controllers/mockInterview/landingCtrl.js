@@ -10,7 +10,7 @@ import {
   addMentorHelper,
   addBossHelper,
   getAdminHelper,
-  updateStudentCollectionHelper,
+  addToStudentCollectionHelper,
   removeFromStudentCollectionHelper
 } from '../../../database/helpers/mentorHelpers';
 
@@ -54,20 +54,11 @@ const loginValidator = (req, res) => {
 
 const updateStudentCollection = (req, res) => {
   //provides name and string in the format of 'students.adminLvl[studentId]'
-  let { name, studentId } = req.body;
+  let { name, studentId, type } = req.body;
   let studentCollection = `students.${studentId}`;
-  updateStudentCollectionHelper(name, studentCollection)
-    .then(() => res.status(201).send('success'))
-    .catch((err) => { 
-      console.error(err)
-      res.status(404).send('error')
-    });
-}
+  let updateHelper = type === 'add' ? addToStudentCollectionHelper : removeFromStudentCollectionHelper;
 
-const removeFromStudentCollection = (req, res) => {
-  let { name, studentId } = req.body;
-  let studentCollection = `students.${studentId}`;
-  removeFromStudentCollectionHelper(name, studentCollection)
+  updateHelper(name, studentCollection)
     .then(() => res.status(201).send('success'))
     .catch((err) => { 
       console.error(err)
@@ -105,7 +96,6 @@ export {
   addBoss,
   loginValidator,
   updateStudentCollection,
-  removeFromStudentCollection,
   getEverything,
   getMentorStudent,
 };
