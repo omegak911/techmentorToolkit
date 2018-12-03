@@ -58,3 +58,23 @@ describe('Student #2: ', () => {
       .end(done);
   });
 })
+
+describe('Student #3: ', () => {
+  test('it should receive 202 on successful DELETE', (done) => {
+    testSession.delete('/api/mockInterview/main/student')
+      .send({ name: 'jestStudent' })
+      .expect(202)
+      .end(done);
+  });
+
+  test('it should remove a student after DELETE', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect(res => {
+        let { studentData } = res.body;
+        let student = studentData[studentData.length - 1];
+        if (student.name === 'jestStudent') errorMsg('student "jestStudent" to not exist', `${student.name}`);
+      })
+      .end(done);
+  });
+})
