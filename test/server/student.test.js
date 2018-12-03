@@ -37,3 +37,24 @@ describe('Student #1: ', () => {
       .end(done);
   });
 })
+
+
+describe('Student #2: ', () => {
+  test('it should receive 204 on successful PATCH', (done) => {
+    testSession.patch('/api/mockInterview/main/student')
+      .send({ name: 'jestStudent', category: 'JSFundamentals', questionId: 'jestTest', value: 10 })
+      .expect(204)
+      .end(done);
+  });
+
+  test('it should add add a questionId to a student with a value', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect(res => {
+        let { studentData } = res.body;
+        let student = studentData[studentData.length - 1];
+        if (!student.questions.JSFundamentals.jestTest) errorMsg('student to have questionId of jestTest', `${JSON.stringify(student.questions.JSFundamentals)}`);
+      })
+      .end(done);
+  });
+})
