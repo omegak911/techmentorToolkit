@@ -1,10 +1,5 @@
-// addStudent,
-// deleteStudent,
-// updateStudent,
-
 import session from 'supertest-session';
 import app from '../../server';
-import Student from '../../database/schemas/student';
 import { Login_PW } from '../../config';
 
 let testSession = null;
