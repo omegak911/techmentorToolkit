@@ -15,9 +15,9 @@ beforeAll((done) => {
     .end((err) => {
       if (err) return done(err);
       testSession.post('/api/mockInterview/main/mentor')
-      .send({ name: 'jest', password: Create_PW })
-      .expect(201)
-      .end(done);
+        .send({ name: 'jest', password: Create_PW })
+        .expect(201)
+        .end(done);
     })
 })
 
@@ -68,7 +68,7 @@ describe('Admin #3: ', () => {
       .end(done);
   });
 
-  test('add a student Id to a mentor\'s student collection', (done) => {
+  test('it should add a student Id to a mentor\'s student collection', (done) => {
     testSession.get('/api/mockInterview/main/')
       .expect(200)
       .expect(res => {
@@ -77,5 +77,23 @@ describe('Admin #3: ', () => {
         if (!mentor.students.jestStudent) errorMsg('students.jestStudent: true', `${mentor.students}`);
       })
       .end(done);
-  });  
+  });
+
+  test('it should respond with 204 on successful patch', (done) => {
+    testSession.patch('/api/mockInterview/main/mentor')
+      .send({ name: 'jest', studentId: 'jestStudent', type: 'delete' })
+      .expect(204)
+      .end(done);
+  });
+
+  test('it should delete a student Id to a mentor\'s student collection', (done) => {
+    testSession.get('/api/mockInterview/main/')
+      .expect(200)
+      .expect(res => {
+        let { adminData } = res.body;
+        let mentor = adminData[adminData.length - 2]; //cuz jestBoss should be the last
+        if (mentor.students.jestStudent) errorMsg('students.jestStudent to not exist', `${mentor.students}`);
+      })
+      .end(done);
+  });
 })
