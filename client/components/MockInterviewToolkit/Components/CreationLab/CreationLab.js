@@ -10,17 +10,24 @@ class CreationLab extends Component {
     this.state ={
       category: '',
       newCategory: '',
-      text: ''
+      question: '',
+      answer: '',
+      success: false
     }
   }
 
   createQuestion = (e) => {
     e.preventDefault();
 
+    let { category, question, answer } = this.state;
+    axios
+      .post('/api/mockInterview/main/questions', {category, question, answer })
+      .then(() => this.setState({ success: true, category: '', question: '', answer: '' }))
+      .catch(() => console.error('something went wrong when creating a question'));
   }
 
   handleCategorySelect = (category) => {
-    this.setState({ category });
+    this.setState({ category, newCategory: '' });
   }
 
   updateText = (e) => {
@@ -29,17 +36,20 @@ class CreationLab extends Component {
   }
 
   render() {
+    let { category, newCategory, question, answer, success } = this.state;
     return(
       <div>
-        Current category: {this.state.category}
+        {success && <div>Thank you for your contribution</div>}
+        Current category: {category}
         <Categories handleCategorySelect={this.handleCategorySelect}/>
-        <form action="" onSubmit={(e) => { e.preventDefault(); this.handleCategorySelect(this.state.newCategory)}}>
-          <input name="newCategory" type="text" onChange={this.updateText} placeholder="new category"/>
+        <form action="" onSubmit={(e) => { e.preventDefault(); this.handleCategorySelect(newCategory)}}>
+          <input name="newCategory" value={newCategory} type="text" onChange={this.updateText} placeholder="new category"/>
           <button type="submit">Add Category</button>
         </form>
         <br/>
         <form action="" onSubmit={this.createQuestion}>
-          <input anme="text" type="text" onChange={this.updateText} placeholder="question text"/>
+          <input name="question" value={question} type="text" onChange={this.updateText} placeholder="question text"/>
+          <input name="answer" value={answer} type="text" onChange={this.updateText} placeholder="answer text"/>
           <button type="submit">Add Question</button>
         </form>
 
