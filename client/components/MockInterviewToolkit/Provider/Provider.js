@@ -14,14 +14,15 @@ class Provider extends Component {
       assignedStudentsObj: {},
       assignedStudents: [],
       remainingStudents: [],
-      categories: []
+      categories: [],
+      organizedQuestionData: {}
     }
   }
 
   initialLoadUpdate = (adminData, studentData, questionData, username ) => {
     let assignedStudentsObj = this.createAssignedStudentObj(adminData, username);
     let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
-    let categories = this.identifyQuestionCategories(questionData);
+    let { categories, organizedQuestionData} = this.identifyQuestionCategories(questionData);
 
     this.setState({ 
       adminData, 
@@ -31,7 +32,8 @@ class Provider extends Component {
       assignedStudentsObj, 
       assignedStudents, 
       remainingStudents,
-      categories }, () => console.log(this.state));
+      categories, 
+      organizedQuestionData }, () => console.log(this.state));
   }
 
   createAssignedStudentObj = (adminData, username = this.state.username) => {
@@ -61,16 +63,17 @@ class Provider extends Component {
   }
 
   identifyQuestionCategories = (questionData) => {
-    let hist = {};
+    let organizedQuestionData = {};
     let categories = [];
     for (let i = 0; i < questionData.length; i++) {
-      let { category } = questionData;
-      if (!hist[category]) {
-        hist[category] = true;
+      let { category, text, _id } = questionData;
+      if (!organizedQuestionData[category]) {
+        organizedQuestionData[category] = true;
         categories.push(category);
-       }
+      }
+      organizedQuestionData[category][_id] = text;
     }
-    return categories;
+    return { categories, organizedQuestionData};
   }
 
   updateAdminStudent = () => { //we need the update to be an API call because we need the DB IDs
