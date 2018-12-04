@@ -12,22 +12,49 @@ class CreationLab extends Component {
       newCategory: '',
       question: '',
       answer: '',
-      success: false
+      success: false,
+      error: false
     }
   }
 
-  createQuestion = (e) => {
-    e.preventDefault();
-
+  createQuestion = () => {
     let { category, question, answer } = this.state;
-    axios
-      .post('/api/mockInterview/main/questions', {category, question, answer })
-      .then(() => this.setState({ success: true, category: '', question: '', answer: '' }))
-      .catch(() => console.error('something went wrong when creating a question'));
+    
+    let allFieldsPresent = category.length > 0 && question.length > 0 && answer.length > 0
+
+    if (allFieldsPresent) {
+      axios
+        .post('/api/mockInterview/main/questions', {category, question, answer })
+        .then(() => this.setState({ success: true, error: false, category: '', question: '', answer: '' }))
+        .catch(() => console.error('something went wrong when creating a question'));
+    } else {
+      this.setState({ error: true })
+    }
+  }
+
+  updateQuestion = () => {
+
+  }
+
+  deleteQuestion = () => {
+
   }
 
   handleCategorySelect = (category) => {
     this.setState({ category, newCategory: '' });
+  }
+
+  handleQuestionSubmit = (e) => {
+    e.preventDefault();
+    let { mode } = this.state;
+
+    let options = {
+      Add: this.createQuestion,
+      Delete: this.deleteQuestion,
+      Update: this.updateQuestion
+    }
+
+    options[mode] ? options[mode]() : this.setState({ error: true });
   }
 
   updateText = (e) => {
@@ -36,22 +63,34 @@ class CreationLab extends Component {
   }
 
   render() {
-    let { category, newCategory, question, answer, success } = this.state;
+    let { category, newCategory, question, answer, success, error, mode } = this.state;
     return(
       <div>
-        {success && <div>Thank you for your contribution</div>}
-        Current category: {category}
-        <Categories handleCategorySelect={this.handleCategorySelect}/>
-        <form action="" onSubmit={(e) => { e.preventDefault(); this.handleCategorySelect(newCategory)}}>
-          <input name="newCategory" value={newCategory} type="text" onChange={this.updateText} placeholder="new category"/>
-          <button type="submit">Add Category</button>
-        </form>
+        <div>
+          MODE: {mode}
+          <br/>
+          <button type="button" name="mode" value="Add" onClick={this.updateText}>Add</button>
+          <button type="button" name="mode" value="Update" onClick={this.updateText}>Update</button>
+          <button type="button" name="mode" value="Delete" onClick={this.updateText}>Delete</button>
+        </div>
+
         <br/>
-        <form action="" onSubmit={this.createQuestion}>
-          <input name="question" value={question} type="text" onChange={this.updateText} placeholder="question text"/>
-          <input name="answer" value={answer} type="text" onChange={this.updateText} placeholder="answer text"/>
-          <button type="submit">Add Question</button>
-        </form>
+        <div>
+          {success && <div>Thank you for your contribution</div>}
+          {error && <div>missing a field (mode, category, question, answer)</div>}
+          Current category: {category}
+          <Categories handleCategorySelect={this.handleCategorySelect}/>
+          <form action="" onSubmit={(e) => { e.preventDefault(); this.handleCategorySelect(newCategory)}}>
+            <input name="newCategory" value={newCategory} type="text" onChange={this.updateText} placeholder="new category"/>
+            <button type="submit">Add Category</button>
+          </form>
+          <br/>
+          <form action="" onSubmit={this.handleQuestionSubmit}>
+            <input name="question" value={question} type="text" onChange={this.updateText} placeholder="question text"/>
+            <input name="answer" value={answer} type="text" onChange={this.updateText} placeholder="answer text"/>
+            <button type="submit">Add Question</button>
+          </form>
+        </div>
 
         modify question - have search bar
 
