@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import SearchQuestion from './SearchQuestion';
+
 class CreationLab extends Component {
   constructor(props) {
     super(props);
@@ -11,13 +13,11 @@ class CreationLab extends Component {
   render() {
     return(
       <div>
-        Create
-
         add question
 
-        modify question
+        modify question - have search bar
 
-        delete question
+        delete question - have search bar
       </div>
     )
   }
