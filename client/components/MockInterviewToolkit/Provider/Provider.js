@@ -13,13 +13,15 @@ class Provider extends Component {
       username: '',
       assignedStudentsObj: {},
       assignedStudents: [],
-      remainingStudents: []
+      remainingStudents: [],
+      categories: []
     }
   }
 
   initialLoadUpdate = (adminData, studentData, questionData, username ) => {
     let assignedStudentsObj = this.createAssignedStudentObj(adminData, username);
     let { assignedStudents, remainingStudents } = this.filterStudents(assignedStudentsObj, studentData);
+    let categories = this.identifyQuestionCategories(questionData);
 
     this.setState({ 
       adminData, 
@@ -28,11 +30,11 @@ class Provider extends Component {
       username, 
       assignedStudentsObj, 
       assignedStudents, 
-      remainingStudents }, () => console.log(this.state));
+      remainingStudents,
+      categories }, () => console.log(this.state));
   }
 
   createAssignedStudentObj = (adminData, username = this.state.username) => {
-    console.log('createAssignedStudentObj username: ', username);
     let assignedStudentsObj = {};
     for (let i = 0; i < adminData.length; i++) {
       if (adminData[i].name === username) {
@@ -58,8 +60,20 @@ class Provider extends Component {
     return { assignedStudents, remainingStudents };
   }
 
+  identifyQuestionCategories = (questionData) => {
+    let hist = {};
+    let categories = [];
+    for (let i = 0; i < questionData.length; i++) {
+      let { category } = questionData;
+      if (!hist[category]) {
+        hist[category] = true;
+        categories.push(category);
+       }
+    }
+    return categories;
+  }
+
   updateAdminStudent = () => { //we need the update to be an API call because we need the DB IDs
-    console.log('updateAdminStudent');
     axios
       .get('/api/mockInterview/main/mentor/')
       .then(({ data }) => {
