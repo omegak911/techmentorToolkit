@@ -1,5 +1,6 @@
 import session from 'supertest-session';
 import app from '../../server';
+import Student from '../../database/schemas/student';
 import { Login_PW } from '../../config';
 
 let testSession = null;
@@ -22,14 +23,11 @@ beforeAll((done) => {
 
 describe('Student #1: ', () => {
   test('it should create the student', (done) => {
-    testSession.get('/api/mockInterview/main/')
-      .expect(200)
-      .expect(res => {
-        let { studentData } = res.body;
-        let student = studentData[studentData.length - 1];
-        if (student.name !== 'jestStudent' || student.cohort !== 1) errorMsg('jestStudent + 1', `${student.name} + ${student.cohort}`);
+    Student.findOne({ name: 'jestStudent' })
+      .then(student => {
+        if (!student || student.name !== 'jestStudent' || student.cohort !== 1) errorMsg('jestStudent + 1', `${student.name} + ${student.cohort}`);
+        done();
       })
-      .end(done);
   });
 })
 
@@ -63,13 +61,10 @@ describe('Student #3: ', () => {
   });
 
   test('it should remove a student after DELETE', (done) => {
-    testSession.get('/api/mockInterview/main/')
-      .expect(200)
-      .expect(res => {
-        let { studentData } = res.body;
-        let student = studentData[studentData.length - 1];
-        if (student.name === 'jestStudent') errorMsg('student "jestStudent" to not exist', `${student.name}`);
+    Student.findOne({ name: 'jestStudent' })
+      .then(student => {
+        if (student) errorMsg('student "jestStudent" to not exist', `${student.name}`);
+        done();
       })
-      .end(done);
   });
 })
