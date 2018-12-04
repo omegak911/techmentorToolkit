@@ -19,7 +19,7 @@ const deleteStudent = (req, res) => {
 }
 
 const updateStudent = (req, res) => {
-  let { name, category, questionId, value } = req.body; 
+  let { name, category, questionId, value } = req.body;
   let objString = `questions.${category}.${questionId}`;//objString should be ex. questions.JSFundamentals.1 | value = number
   updateStudentHelper(name, objString, value)
     .then(() => res.status(204).send('success'))

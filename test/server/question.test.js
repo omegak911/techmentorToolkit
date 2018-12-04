@@ -1,8 +1,10 @@
 import session from 'supertest-session';
 import app from '../../server';
+import Question from '../../database/schemas/question';
 import { Login_PW } from '../../config';
 
 let testSession = null;
+let questionId = null;
 const errorMsg = (expected = 'EXPECTED', actual = 'ACTUAL') => { 
   throw new Error(`expected ${expected}, but got ${actual}`);
 };
@@ -13,14 +15,10 @@ beforeAll((done) => {
     .expect(200)
     .end((err) => {
       if (err) return done(err);
-      testSession.post('/api/mockInterview/main/student')
-        .send({ name: 'jestStudent', cohort: 1 })
-        .expect(201)
-        .end(done);
+      done();
     })
 })
 
-// addQuestionHelper,
 // deleteQuestionHelper,
 // updateQuestionHelper
 
@@ -33,15 +31,14 @@ describe('Question #1: ', () => {
   });
 
   test('it should create the question', (done) => {
-    testSession.get('/api/mockInterview/main/')
-      .expect(200)
-      .expect(res => {
-        let { questionData } = res.body;
-        let question = questionData[questionData.length - 1];
-        if (question.category !== 'CSS' || question.text !== 'jestQuestion') errorMsg('category: CSS and text: "jestQuestion"', `category: ${question.category} and text: ${question.text}`);
+    Question.findOne({ category: 'CSS', text: 'jestQuestion'})
+      .then((res) => {
+        if (!res.text) return errorMsg();
+        if (res.text) {
+          questionId = res._id;
+          done();
+        }
       })
-      .end(done);
   });
-
-
 })
+

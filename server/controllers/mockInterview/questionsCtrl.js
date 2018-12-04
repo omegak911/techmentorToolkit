@@ -21,7 +21,7 @@ const deleteQuestion = (req, res) => {
 const updateQuestion = (req, res) => {
   let { id, text } = req.body;
   updateQuestionHelper(id, text)
-    .then(() => res.status(201).send('success'))
+    .then(() => res.status(204).send('success'))
     .catch(err => res.status(404).send('error'));
 }
 
