@@ -19,8 +19,6 @@ beforeAll((done) => {
     })
 })
 
-// deleteQuestionHelper,
-
 describe('Question #1: ', () => {
   test('it should respond with 201 upon successful POST', (done) => {
     testSession.post('/api/mockInterview/main/questions')
@@ -58,3 +56,19 @@ describe('Question #2: ', () => {
   });
 })
 
+describe('Question #3: ', () => {
+  test('it should respond with 202 upon successful DELETE', (done) => {
+    testSession.delete('/api/mockInterview/main/questions')
+      .send({ id: questionId })
+      .expect(202)
+      .end(done);
+  });
+
+  test('it should delete the question', (done) => {
+    Question.findOne({ _id: questionId })
+      .then((res) => {
+        if (res) return errorMsg();
+        done();
+      })
+  });
+})
