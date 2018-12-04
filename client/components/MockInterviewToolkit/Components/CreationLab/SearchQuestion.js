@@ -40,14 +40,12 @@ class SearchQuestion extends Component {
         {category && <Context.Consumer>
           {(provider) => {
             let { organizedQuestionData } = provider.state;
-            console.log(organizedQuestionData, category)
             let ids = Object.keys(organizedQuestionData[category]);
-            console.log(ids)
-            return ids.map((id, index) => {
+            return ids.map(id => {
               let currentQuestion = organizedQuestionData[category][id];
               let { answer, question } = currentQuestion;
               if (id !== '' && (question.includes(query) || answer.includes(query))) {
-                return <Question category={currentQuestion.category} question={currentQuestion.question} answer={currentQuestion.answer} key={index}/>
+                return <Question _id={id} category={currentQuestion.category} question={question} answer={answer} key={id}/>
               }
             })
           }}
