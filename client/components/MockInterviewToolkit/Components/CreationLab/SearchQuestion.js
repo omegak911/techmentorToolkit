@@ -7,6 +7,7 @@ class SearchQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      category: null,
       query: ''
     }
   }
@@ -24,6 +25,7 @@ class SearchQuestion extends Component {
   render() {
     return (
       <div>
+        
         <form action="" onSubmit={this.searchQuestions}>
           <input type="text" onChange={this.updateQuery}/>
           <button type="submit"></button>

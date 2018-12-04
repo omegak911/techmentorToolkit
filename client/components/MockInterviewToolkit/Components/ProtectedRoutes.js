@@ -4,7 +4,7 @@ import { Route } from 'react-router';
 
 import Navbar from './Nav';
 import Stats from './Stats';
-import CreationLab from './CreationLab';
+import CreationLab from './CreationLab/CreationLab';
 import Session from './Session';
 import Admin from './Admin/Admin';
 
