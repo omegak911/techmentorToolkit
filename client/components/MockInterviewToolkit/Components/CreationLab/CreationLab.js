@@ -12,6 +12,7 @@ class CreationLab extends Component {
       newCategory: '',
       question: '',
       answer: '',
+      selectedQuestion: null,
       success: false,
       error: false
     }
@@ -28,7 +29,7 @@ class CreationLab extends Component {
         .then(() => this.setState({ success: true, error: false, category: '', question: '', answer: '' }))
         .catch(() => console.error('something went wrong when creating a question'));
     } else {
-      this.setState({ error: true })
+      this.setState({ error: true });
     }
   }
 
@@ -75,7 +76,7 @@ class CreationLab extends Component {
         </div>
 
         <br/>
-        <div>
+        {(mode === 'Add' || mode === 'Update') && <div>
           {success && <div>Thank you for your contribution</div>}
           {error && <div>missing a field (mode, category, question, answer)</div>}
           Current category: {category}
@@ -90,7 +91,11 @@ class CreationLab extends Component {
             <input name="answer" value={answer} type="text" onChange={this.updateText} placeholder="answer text"/>
             <button type="submit">Add Question</button>
           </form>
-        </div>
+        </div>}
+
+        {(mode === 'Update' || mode === 'Delete') && 
+          <SearchQuestion />
+        }
 
         modify question - have search bar
 
