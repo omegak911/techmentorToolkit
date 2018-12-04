@@ -47,8 +47,8 @@ class Landing extends Component {
         Landing
 
         <form action="" onSubmit={this.handleLogin}>
-          <input type="text" name="username" value={username} placeholder="username" onChange={this.handleChange}/>
-          <input type="password" name="password" value={password} placeholder="password" onChange={this.handleChange}/>
+          <input type="text" name="username" value={username} placeholder="username" autoComplete="username" onChange={this.handleChange}/>
+          <input type="password" name="password" value={password} placeholder="password" autoComplete="current-password" onChange={this.handleChange}/>
           <button type="submit">Login</button>
         </form>
         {incorrect && <div>Invalid username/password</div>}
