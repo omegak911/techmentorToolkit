@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 
 const questionSchema = new mongoose.Schema({
   category: String,
-  text: String
+  question: String,
+  answer: String
 });
 
 const Question = mongoose.model('Question', questionSchema);

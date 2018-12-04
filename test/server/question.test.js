@@ -22,19 +22,17 @@ beforeAll((done) => {
 describe('Question #1: ', () => {
   test('it should respond with 201 upon successful POST', (done) => {
     testSession.post('/api/mockInterview/main/questions')
-      .send({ category: 'CSS', text: 'jestQuestion'})
+      .send({ category: 'CSS', question: 'jestQuestion', answer: 'jestAnswer'})
       .expect(201)
       .end(done);
   });
 
   test('it should create the question', (done) => {
-    Question.findOne({ category: 'CSS', text: 'jestQuestion'})
+    Question.findOne({ category: 'CSS', question: 'jestQuestion'})
       .then((res) => {
-        if (!res.text) return errorMsg();
-        if (res.text) {
-          questionId = res._id;
-          done();
-        }
+        if (!res.question) return errorMsg();
+        questionId = res._id;
+        done();
       })
   });
 })
@@ -42,15 +40,15 @@ describe('Question #1: ', () => {
 describe('Question #2: ', () => {
   test('it should respond with 204 upon successful PATCH', (done) => {
     testSession.patch('/api/mockInterview/main/questions')
-      .send({ id: questionId, text: 'jestQuestion #2'})
+      .send({ id: questionId, question: 'jestQuestion #2', answer: 'jestAnswer'})
       .expect(204)
       .end(done);
   });
 
   test('it should update the question', (done) => {
-    Question.findOne({ category: 'CSS', text: 'jestQuestion #2'})
+    Question.findOne({ category: 'CSS', question: 'jestQuestion #2'})
       .then((res) => {
-        if (!res.text) return errorMsg();
+        if (!res.question) return errorMsg();
         done();
       })
   });
