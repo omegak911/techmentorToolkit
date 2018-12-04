@@ -66,12 +66,12 @@ class Provider extends Component {
     let organizedQuestionData = {};
     let categories = [];
     for (let i = 0; i < questionData.length; i++) {
-      let { category, text, _id } = questionData;
+      let { category, question, answer, _id } = questionData[i];
       if (!organizedQuestionData[category]) {
-        organizedQuestionData[category] = true;
+        organizedQuestionData[category] = {};
         categories.push(category);
       }
-      organizedQuestionData[category][_id] = text;
+      organizedQuestionData[category][_id] = { question, answer };
     }
     return { categories, organizedQuestionData};
   }

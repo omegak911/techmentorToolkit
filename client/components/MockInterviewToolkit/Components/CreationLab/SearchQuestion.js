@@ -25,7 +25,6 @@ class SearchQuestion extends Component {
   render() {
     return (
       <div>
-        
         <form action="" onSubmit={this.searchQuestions}>
           <input type="text" onChange={this.updateQuery}/>
           <button type="submit"></button>
