@@ -20,7 +20,6 @@ beforeAll((done) => {
 })
 
 // deleteQuestionHelper,
-// updateQuestionHelper
 
 describe('Question #1: ', () => {
   test('it should respond with 201 upon successful POST', (done) => {
@@ -38,6 +37,23 @@ describe('Question #1: ', () => {
           questionId = res._id;
           done();
         }
+      })
+  });
+})
+
+describe('Question #2: ', () => {
+  test('it should respond with 204 upon successful PATCH', (done) => {
+    testSession.patch('/api/mockInterview/main/questions')
+      .send({ id: questionId, text: 'jestQuestion #2'})
+      .expect(204)
+      .end(done);
+  });
+
+  test('it should update the question', (done) => {
+    Question.findOne({ category: 'CSS', text: 'jestQuestion #2'})
+      .then((res) => {
+        if (!res.text) return errorMsg();
+        done();
       })
   });
 })
