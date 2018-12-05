@@ -29,6 +29,7 @@ class SearchQuestion extends Component {
 
   render() {
     let { category, query } = this.state;
+    let { handleQuestionSelect } = this.props;
     return (
       <div>
         <Categories handleCategorySelect={this.handleCategorySelect}/>
@@ -45,7 +46,16 @@ class SearchQuestion extends Component {
               let currentQuestion = organizedQuestionData[category][id];
               let { answer, question } = currentQuestion;
               if (id !== '' && (question.includes(query) || answer.includes(query))) {
-                return <Question _id={id} category={currentQuestion.category} question={question} answer={answer} key={id}/>
+                return (
+                  <Question 
+                    _id={id} 
+                    answer={answer} 
+                    category={currentQuestion.category} 
+                    handleQuestionSelect={handleQuestionSelect}
+                    key={id}
+                    question={question} 
+                    />
+                )
               }
             })
           }}

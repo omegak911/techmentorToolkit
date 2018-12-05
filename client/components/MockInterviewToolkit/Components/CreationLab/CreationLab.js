@@ -45,6 +45,10 @@ class CreationLab extends Component {
     this.setState({ category, newCategory: '' });
   }
 
+  handleQuestionSelect = (selectedQuestion) => {
+    this.setState({ selectedQuestion }, () => console.log(this.state.selectedQuestion));
+  }
+
   handleQuestionSubmit = (e) => {
     e.preventDefault();
     let { mode } = this.state;
@@ -94,12 +98,8 @@ class CreationLab extends Component {
         </div>}
 
         {(mode === 'Update' || mode === 'Delete') && 
-          <SearchQuestion />
+          <SearchQuestion handleQuestionSelect={this.handleQuestionSelect}/>
         }
-
-        modify question - have search bar
-
-        delete question - have search bar
       </div>
     )
   }

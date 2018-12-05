@@ -13,10 +13,11 @@ class Question extends Component {
   }
 
   render() {
-    let { answer, category, question } = this.props;
+    let { _id, answer, category, question, handleQuestionSelect } = this.props;
     let { showAnswer } = this.state;
     return (
       <div>
+        <button type="button" onClick={() => handleQuestionSelect({ _id, answer, category, question })}>select</button>
         <div>
           Category: {category}
         </div>
