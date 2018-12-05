@@ -4,6 +4,7 @@ import Context from '../../Provider/Context';
 
 const Categories = ({ handleCategorySelect }) =>
   <div>
+    Existing Categories: {' '}
     <Context.Consumer>
       {(provider) => {
         return provider.state.categories.map((category, index) => 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 class Question extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Question extends Component {
     let { _id, answer, category, question, handleQuestionSelect } = this.props;
     let { showAnswer } = this.state;
     return (
-      <div>
+      <StyledQuestion>
         <button type="button" onClick={() => handleQuestionSelect({ _id, answer, category, question })}>select</button>
         <div>
           Category: {category}
@@ -26,9 +27,13 @@ class Question extends Component {
         </div>
           <button type="button" onClick={this.showAnswer}>answer</button>
         {showAnswer && <div>{answer}</div>}
-      </div>
+      </StyledQuestion>
     )
   }
-} 
+}
+
+const StyledQuestion = styled.div`
+  border: 1px solid black;
+`
 
 export default Question;
