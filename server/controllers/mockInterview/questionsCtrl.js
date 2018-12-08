@@ -12,8 +12,8 @@ const addQuestion = (req, res) => {
 }
 
 const deleteQuestion = (req, res) => {
-  let { id } = req.body;
-  deleteQuestionHelper(id)
+  let { _id } = req.body;
+  deleteQuestionHelper(_id)
     .then(() => res.status(202).send('success'))
     .catch(err => res.status(404).send('error'));
 }

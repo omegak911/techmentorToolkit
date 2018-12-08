@@ -18,11 +18,6 @@ class SearchQuestion extends Component {
     this.setState({ category });
   }
 
-  searchQuestions = (e) => {
-    e.preventDefault();
-
-  }
-
   updateQuery = (e) => {
     let { value } = e.target;
     this.setState({ query: value });
@@ -34,10 +29,7 @@ class SearchQuestion extends Component {
     return (
       <StyledSearchContainer>
         <Categories handleCategorySelect={this.handleCategorySelect}/>
-        <form action="" onSubmit={this.searchQuestions}>
-          <input type="text" onChange={this.updateQuery}/>
-          <button type="submit">search</button>
-        </form>
+        {category && <input type="text" onChange={this.updateQuery} placeholder="filter search"/>}
         Search Results:
 
         {category && 
