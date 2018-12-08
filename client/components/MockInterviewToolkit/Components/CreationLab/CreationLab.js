@@ -27,6 +27,7 @@ class CreationLab extends Component {
       axios
         .post('/api/mockInterview/main/questions', {category, question, answer })
         .then(() => this.setState({ success: true, error: false, category: '', question: '', answer: '' }))
+        //need to add function here to update 
         .catch(() => console.error('something went wrong when creating a question'));
     } else {
       this.setState({ error: true });
@@ -38,7 +39,20 @@ class CreationLab extends Component {
   }
 
   deleteQuestion = () => {
+    let { _id } = this.state.selectedQuestion;
+    console.log(_id)
+    let options = {
+      data: {
+        _id
+      }
+    }
+    axios
+      .delete('/api/mockInterview/main/questions', options)
+      .then(() => {
+        //remove question from Provider
 
+      })
+      .catch(() => console.error('deleteQuestion error'));
   }
 
   handleCategorySelect = (category) => {
@@ -68,7 +82,7 @@ class CreationLab extends Component {
   }
 
   render() {
-    let { category, newCategory, question, answer, success, error, mode } = this.state;
+    let { category, newCategory, question, answer, success, error, mode, selectedQuestion } = this.state;
     return(
       <div>
         <div>
@@ -78,6 +92,15 @@ class CreationLab extends Component {
           <button type="button" name="mode" value="Update" onClick={this.updateText}>Update</button>
           <button type="button" name="mode" value="Delete" onClick={this.updateText}>Delete</button>
         </div>
+
+        <br/>
+
+        {mode !== 'Add' && selectedQuestion && 
+          <div>
+            <p>Selected Question: {selectedQuestion.question}</p>
+            <button type="button" onClick={this.handleQuestionSubmit}>{mode}</button>
+          </div>
+        }
 
         <br/>
         {(mode === 'Add' || mode === 'Update') && <div>
