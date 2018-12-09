@@ -27,7 +27,7 @@ class CreationLab extends Component {
       axios
         .post('/api/mockInterview/main/questions', {category, question, answer })
         .then(() => this.setState({ success: true, error: false, category: '', question: '', answer: '' }))
-        //need to add function here to update 
+        //need to add function here to update provider
         .catch(() => console.error('something went wrong when creating a question'));
     } else {
       this.setState({ error: true });
@@ -35,12 +35,25 @@ class CreationLab extends Component {
   }
 
   updateQuestion = () => {
+    let { category, question, answer, selectedQuestion } = this.state;
+    let { _id } = selectedQuestion;
+    let payload = {
+        _id,
+        category,
+        question,
+        answer
+    }
 
+    axios
+      .patch('/api/mockInterview/main/questions', payload)
+      .then(() => {
+        console.log('done')
+      })
+      .catch(() => console.error('patchQuestion error'))
   }
 
   deleteQuestion = () => {
     let { _id } = this.state.selectedQuestion;
-    console.log(_id)
     let options = {
       data: {
         _id
@@ -50,7 +63,6 @@ class CreationLab extends Component {
       .delete('/api/mockInterview/main/questions', options)
       .then(() => {
         //remove question from Provider
-
       })
       .catch(() => console.error('deleteQuestion error'));
   }
@@ -60,7 +72,12 @@ class CreationLab extends Component {
   }
 
   handleQuestionSelect = (selectedQuestion) => {
-    this.setState({ selectedQuestion }, () => console.log(this.state.selectedQuestion));
+    let { category, question, answer } = selectedQuestion;
+    if (this.state.mode === 'Update') {
+      this.setState({ selectedQuestion, category, question, answer });
+    } else {
+      this.setState({ selectedQuestion }, () => console.log(this.state.selectedQuestion));
+    }
   }
 
   handleQuestionSubmit = (e) => {
@@ -95,7 +112,7 @@ class CreationLab extends Component {
 
         <br/>
 
-        {mode !== 'Add' && selectedQuestion && 
+        {mode === 'Delete' && selectedQuestion && 
           <div>
             <p>Selected Question: {selectedQuestion.question}</p>
             <button type="button" onClick={this.handleQuestionSubmit}>{mode}</button>
