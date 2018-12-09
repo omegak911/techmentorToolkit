@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 
+import SearchQuestion from '../ModuleReuse/SearchQuestion';
+
 class NewSession extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedStudent: null,
       selectedQuestion: null,
       session: null,
       sessionQuestions: []
     }
   }
 
+  componentDidMount() {
+    let { session } = this.props.selectedStudent;
+    for (let i = 1; i < 10; i++) {
+      if (!session[i]) {
+        return this.setState({ session: i });
+      }
+    }
+  }
+
   render() {
+    let { session } = this.state;
     return (
       <div>
         Features
-
-        Similar to the Assign Component, we want to show currently assigned students to be selected
-
-        Declare session #
+        
+        Next Session #: {` ${session}`}
 
         SearchQuestion that uses handleQuestionSelect to select a question
         function to attach question to a specific student
