@@ -6,7 +6,7 @@ import Context from '../Provider/Context';
 import Navbar from './Nav';
 import Stats from './Stats';
 import CreationLab from './CreationLab/CreationLab';
-import Session from './Session';
+import Session from './Session/Session';
 import Admin from './Admin/Admin';
 
 class ProtectedRoutes extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Categories from '../ModuleReuse/Categories';
-import SearchQuestion from './SearchQuestion';
+import SearchQuestion from '../ModuleReuse/SearchQuestion';
 
 class CreationLab extends Component {
   constructor(props) {

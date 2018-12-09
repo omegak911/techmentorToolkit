@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import NewSession from './NewSession';
+import SelectedSession from './SelectedSession';
+
 class Session extends Component {
   constructor(props) {
     super(props);
