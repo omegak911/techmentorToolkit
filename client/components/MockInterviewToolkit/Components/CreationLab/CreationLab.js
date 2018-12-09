@@ -18,16 +18,16 @@ class CreationLab extends Component {
     }
   }
 
-  createQuestion = () => {
+  addQuestion = () => {
     let { category, question, answer } = this.state;
     
     let allFieldsPresent = category.length > 0 && question.length > 0 && answer.length > 0
 
     if (allFieldsPresent) {
       axios
-        .post('/api/mockInterview/main/questions', {category, question, answer })
+        .post('/api/mockInterview/main/questions', { category, question, answer })
         .then(() => this.setState({ success: true, error: false, category: '', question: '', answer: '' }))
-        //need to add function here to update provider
+        .then(() => this.props.handleProviderQuestionChange('Add'))
         .catch(() => console.error('something went wrong when creating a question'));
     } else {
       this.setState({ error: true });
@@ -85,7 +85,7 @@ class CreationLab extends Component {
     let { mode } = this.state;
 
     let options = {
-      Add: this.createQuestion,
+      Add: this.addQuestion,
       Delete: this.deleteQuestion,
       Update: this.updateQuestion
     }
