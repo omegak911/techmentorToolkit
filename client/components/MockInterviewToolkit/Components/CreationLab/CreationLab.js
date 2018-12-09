@@ -51,7 +51,7 @@ class CreationLab extends Component {
   }
 
   deleteQuestion = () => {
-    let { _id } = this.state.selectedQuestion;
+    let { _id, category } = this.state.selectedQuestion;
     let options = {
       data: {
         _id
@@ -59,9 +59,7 @@ class CreationLab extends Component {
     }
     axios
       .delete('/api/mockInterview/main/questions', options)
-      .then(() => {
-        //remove question from Provider
-      })
+      .then(() => this.props.handleProviderQuestionChange('Delete', { _id, category }))
       .catch(() => console.error('deleteQuestion error'));
   }
 
@@ -74,7 +72,7 @@ class CreationLab extends Component {
     if (this.state.mode === 'Update') {
       this.setState({ selectedQuestion, category, question, answer });
     } else {
-      this.setState({ selectedQuestion }, () => console.log(this.state.selectedQuestion));
+      this.setState({ selectedQuestion });
     }
   }
 

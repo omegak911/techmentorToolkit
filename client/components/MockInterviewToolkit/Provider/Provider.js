@@ -115,7 +115,12 @@ class Provider extends Component {
   }
 
   deleteQuestion = (question) => {
+    let { _id, category } = question;
+    let organizedQuestionData = {...this.state.organizedQuestionData};
 
+    delete organizedQuestionData[category][_id];
+
+    this.setState({ organizedQuestionData });
   }
 
   addQuestion = () => { //need api request to get newly created _id
