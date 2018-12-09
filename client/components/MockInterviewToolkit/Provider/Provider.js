@@ -104,6 +104,35 @@ class Provider extends Component {
     this.setState({ assignedStudentsObj, assignedStudents, remainingStudents }, () => console.log(this.state));
   }
 
+  handleProviderQuestionChange = (type, question) => {
+    let options = {
+      Add: this.addQuestion,
+      Delete: this.deleteQuestion,
+      Update: this.updateQuestion
+    }
+
+    options[type](question);
+  }
+
+  deleteQuestion = (question) => {
+
+  }
+
+  addQuestion = () => {
+    axios
+      .get('/api/mockInterview/main/questions')
+      .then(({ data }) => {
+        let { categories, organizedQuestionData} = this.identifyQuestionCategories(data);
+        this.setState({ categories, organizedQuestionData })
+      })
+      .catch((err) => console.error(err));
+  }
+
+  // updateQuestion = (newQuestion) => {
+
+  // }
+
+
   render() {
     return (
       <Context.Provider
@@ -112,6 +141,7 @@ class Provider extends Component {
           initialLoadUpdate: this.initialLoadUpdate,
           updateAdminStudent: this.updateAdminStudent,
           updateAssignment: this.updateAssignment,
+          handleProviderQuestionChange: this.handleProviderQuestionChange,
         }} >
         {this.props.children}
       </Context.Provider>
