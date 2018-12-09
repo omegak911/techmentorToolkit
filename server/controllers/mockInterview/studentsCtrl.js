@@ -18,10 +18,18 @@ const deleteStudent = (req, res) => {
     .catch(err => res.status(404).send('error'));
 }
 
+// const updateStudent = (req, res) => {
+//   let { name, category, questionId, value } = req.body;
+//   let objString = `questions.${category}.${questionId}`;//objString should be ex. questions.JSFundamentals.1 | value = number
+//   updateStudentHelper(name, objString, value)
+//     .then(() => res.status(204).send('success'))
+//     .catch(err => res.status(404).send('error'));
+// }
+
 const updateStudent = (req, res) => {
-  let { name, category, questionId, value } = req.body;
-  let objString = `questions.${category}.${questionId}`;//objString should be ex. questions.JSFundamentals.1 | value = number
-  updateStudentHelper(name, objString, value)
+  let { name, session, question } = req.body;
+  let objString = `session.${session}`;//objString should be ex. questions.JSFundamentals.1 | value = number
+  updateStudentHelper(name, objString, question)
     .then(() => res.status(204).send('success'))
     .catch(err => res.status(404).send('error'));
 }
