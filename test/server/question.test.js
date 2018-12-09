@@ -40,13 +40,13 @@ describe('Question #1: ', () => {
 describe('Question #2: ', () => {
   test('it should respond with 204 upon successful PATCH', (done) => {
     testSession.patch('/api/mockInterview/main/questions')
-      .send({ id: questionId, question: 'jestQuestion #2', answer: 'jestAnswer'})
+      .send({ _id: questionId, category: 'JSFundamentals', question: 'jestQuestion #2', answer: 'jestAnswer'})
       .expect(204)
       .end(done);
   });
 
   test('it should update the question', (done) => {
-    Question.findOne({ category: 'CSS', question: 'jestQuestion #2'})
+    Question.findOne({ category: 'JSFundamentals', question: 'jestQuestion #2'})
       .then((res) => {
         if (!res.question) return errorMsg();
         done();
@@ -57,7 +57,7 @@ describe('Question #2: ', () => {
 describe('Question #3: ', () => {
   test('it should respond with 202 upon successful DELETE', (done) => {
     testSession.delete('/api/mockInterview/main/questions')
-      .send({ id: questionId })
+      .send({ _id: questionId })
       .expect(202)
       .end(done);
   });
