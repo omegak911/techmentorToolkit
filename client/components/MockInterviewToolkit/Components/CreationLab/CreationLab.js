@@ -46,9 +46,7 @@ class CreationLab extends Component {
 
     axios
       .patch('/api/mockInterview/main/questions', payload)
-      .then(() => {
-        console.log('done')
-      })
+      .then(() => this.props.handleProviderQuestionChange('Update', payload))
       .catch(() => console.error('patchQuestion error'))
   }
 

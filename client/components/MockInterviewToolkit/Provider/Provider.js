@@ -118,7 +118,7 @@ class Provider extends Component {
 
   }
 
-  addQuestion = () => {
+  addQuestion = () => { //need api request to get newly created _id
     axios
       .get('/api/mockInterview/main/questions')
       .then(({ data }) => {
@@ -128,9 +128,15 @@ class Provider extends Component {
       .catch((err) => console.error(err));
   }
 
-  // updateQuestion = (newQuestion) => {
-
-  // }
+  updateQuestion = (newQuestion) => {
+    let organizedQuestionData = {...this.state.organizedQuestionData};
+    let { _id, category, question, answer } = newQuestion;
+    
+    organizedQuestionData[category] = organizedQuestionData[category] || {};
+    organizedQuestionData[category][_id] = { question, answer };
+    
+    this.setState({ organizedQuestionData });
+  }
 
 
   render() {
