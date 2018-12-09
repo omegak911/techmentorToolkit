@@ -1,6 +1,7 @@
 import {
   addQuestionHelper,
   deleteQuestionHelper,
+  getAllQuestionsHelper,
   updateQuestionHelper
 } from '../../../database/helpers/questionHelpers';
 
@@ -18,6 +19,12 @@ const deleteQuestion = (req, res) => {
     .catch(err => res.status(404).send('error'));
 }
 
+const getQuestion = (req, res) => {
+  getAllQuestionsHelper()
+    .then(questionData => res.status(200).send(questionData))
+    .catch(err => res.status(404).send('error'));
+}
+
 const updateQuestion = (req, res) => {
   let { _id, category, question, answer } = req.body;
   updateQuestionHelper(_id, category, question, answer)
@@ -28,5 +35,6 @@ const updateQuestion = (req, res) => {
 export {
   addQuestion,
   deleteQuestion,
+  getQuestion,
   updateQuestion
 };

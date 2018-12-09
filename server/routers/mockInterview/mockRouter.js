@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { addQuestion, deleteQuestion, updateQuestion } from '../../controllers/mockInterview/questionsCtrl';
+import { addQuestion, deleteQuestion, getQuestion, updateQuestion } from '../../controllers/mockInterview/questionsCtrl';
 import { addStudent, deleteStudent, updateStudent } from '../../controllers/mockInterview/studentsCtrl';
 import { addMentor, addBoss, updateStudentCollection, getEverything, getMentorStudent } from '../../controllers/mockInterview/landingCtrl';
 
@@ -15,6 +15,7 @@ router.route('/student')
   .delete(deleteStudent);
 
 router.route('/questions')
+  .get(getQuestion)
   .post(addQuestion)
   .patch(updateQuestion)
   .delete(deleteQuestion);
