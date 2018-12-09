@@ -6,7 +6,7 @@ const deleteQuestionHelper = (_id) => Question.deleteOne({ _id });
 
 const getAllQuestionsHelper = () => Question.find({});
 
-const updateQuestionHelper = (_id, question, answer) => Question.updateOne({ _id }, { $set: { question, answer }});
+const updateQuestionHelper = (_id, category, question, answer) => Question.updateOne({ _id }, { $set: { category, question, answer }});
 
 export {
   addQuestionHelper,

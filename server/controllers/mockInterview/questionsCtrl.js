@@ -19,8 +19,8 @@ const deleteQuestion = (req, res) => {
 }
 
 const updateQuestion = (req, res) => {
-  let { id, question, answer } = req.body;
-  updateQuestionHelper(id, question, answer)
+  let { _id, category, question, answer } = req.body;
+  updateQuestionHelper(_id, category, question, answer)
     .then(() => res.status(204).send('success'))
     .catch(err => res.status(404).send('error'));
 }
