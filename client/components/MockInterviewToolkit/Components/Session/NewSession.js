@@ -7,9 +7,11 @@ class NewSession extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      duplicate: false,
       selectedQuestion: null,
       session: null,
-      sessionQuestions: []
+      sessionQuestions: [],
+      sessionQHist: {}
     }
   }
 
@@ -23,16 +25,23 @@ class NewSession extends Component {
   }
 
   handleQuestionSelect = ({ _id, answer, category, question }) => {
-    let sessionQuestions = [...this.state.sessionQuestions];
-    sessionQuestions.push({ _id, answer, category, question });
-    this.setState({ sessionQuestions }, () => console.log(this.state.sessionQuestions));
+    if (this.state.sessionQHist[_id]) {
+      this.setState({ duplicate: true });
+    } else {
+      let sessionQHist = {...this.state.sessionQHist};
+      let sessionQuestions = [...this.state.sessionQuestions];
+      sessionQHist[_id] = true;
+      sessionQuestions.push({ _id, answer, category, question });
+      this.setState({ sessionQHist, sessionQuestions, duplicate: false });
+    }
   }
 
   render() {
-    let { session, sessionQuestions } = this.state;
+    let { duplicate, session, sessionQuestions } = this.state;
     return (
       <div>        
         <p>Next Session #: {` ${session}`}</p>
+        {duplicate && <div>Error: Selected question already exists in current session</div>}
         <SearchQuestion handleQuestionSelect={this.handleQuestionSelect}/>
 
         <ul>
