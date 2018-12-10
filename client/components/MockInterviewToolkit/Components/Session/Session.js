@@ -47,17 +47,14 @@ class Session extends Component {
 
         {selectedStudent.name !== "pick a student" && 
           <div>
-            displays sessions from student object
-            <button type="button" name="mode" value="select" onClick={this.selectMode}>select session</button>
+            What would you like to do today?:
             <button type="button" name="mode" value="create" onClick={this.selectMode}>create new session</button>
+            <button type="button" name="mode" value="select" onClick={this.selectMode}>select session</button>
 
             {mode === 'create' && <NewSession selectedStudent={selectedStudent} />}
-            create Session
 
+            {mode === 'select' && !selectedStudent.session['1'] && <div>{`${selectedStudent.name} does not have any sessions`}</div>}
             {mode === 'select' && selectedStudent.session['1'] && <SelectedSession selectedStudent={selectedStudent} session={selectedSession}/>}
-            select Session - needs to select student and session before rendering this
-
-
           </div>
         }
 
