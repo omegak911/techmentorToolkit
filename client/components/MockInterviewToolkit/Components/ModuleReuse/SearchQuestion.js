@@ -27,7 +27,7 @@ class SearchQuestion extends Component {
     let { category, query } = this.state;
     let { handleQuestionSelect } = this.props;
     return (
-      <StyledSearchContainer>
+      <StyledSearchTopContainer>
         <Categories handleCategorySelect={this.handleCategorySelect}/>
         {category && <input type="text" onChange={this.updateQuery} placeholder="filter search"/>}
         Search Results:
@@ -59,10 +59,18 @@ class SearchQuestion extends Component {
           </StyledSearchContainer>
         }
 
-      </StyledSearchContainer>
+      </StyledSearchTopContainer>
     )
   }
 }
+
+const StyledSearchTopContainer = styled.div`
+  border: 1px solid black;
+  margin: 1%;
+  padding: 0.5%;
+  height: 50vh;
+  overflow: scroll;
+`
 
 const StyledSearchContainer = styled.div`
   border: 1px solid black;
