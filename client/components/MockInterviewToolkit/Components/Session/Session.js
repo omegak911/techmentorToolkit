@@ -12,7 +12,7 @@ class Session extends Component {
       selectedStudent: {
         name: "pick a student"
       },
-      selectedSession: null,
+      selectedSession: 'pick a session',
       mode: null
     }
   }
@@ -20,6 +20,11 @@ class Session extends Component {
   selectMode = (e) => {
     let { name, value } = e.target;
     this.setState({ [name]: value });
+  }
+
+  selectSessionMode = (e) => {
+    let { value } = e.target;
+    this.setState({ mode: 'select', selectedSession: value });
   }
 
   selectStudent = (selectedStudent) => {
@@ -49,10 +54,19 @@ class Session extends Component {
           <div>
             What would you like to do today?:
             <button type="button" name="mode" value="create" onClick={this.selectMode}>create new session</button>
-            <button type="button" name="mode" value="select" onClick={this.selectMode}>select session</button>
+            
+            <select value={selectedSession} onChange={this.selectSessionMode}>
+              <option disabled={true}>pick a session</option>
+              {Object.keys(selectedStudent.session).map((session) => {
+                if (session !== 'average') {
+                  return <option key={session} value={session}>{session}</option>
+                }
+              })}
+            </select>
+
+            <br/>
 
             {mode === 'create' && <NewSession selectedStudent={selectedStudent} />}
-
             {mode === 'select' && !selectedStudent.session['1'] && <div>{`${selectedStudent.name} does not have any sessions`}</div>}
             {mode === 'select' && selectedStudent.session['1'] && <SelectedSession selectedStudent={selectedStudent} session={selectedSession}/>}
           </div>
