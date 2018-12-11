@@ -54,7 +54,7 @@ class Session extends Component {
           <div>
             What would you like to do today?:
             <button type="button" name="mode" value="create" onClick={this.selectMode}>create new session</button>
-            
+
             <select value={selectedSession} onChange={this.selectSessionMode}>
               <option disabled={true}>pick a session</option>
               {Object.keys(selectedStudent.session).map((session) => {
@@ -68,7 +68,7 @@ class Session extends Component {
 
             {mode === 'create' && <NewSession selectedStudent={selectedStudent} />}
             {mode === 'select' && !selectedStudent.session['1'] && <div>{`${selectedStudent.name} does not have any sessions`}</div>}
-            {mode === 'select' && selectedStudent.session['1'] && <SelectedSession selectedStudent={selectedStudent} session={selectedSession}/>}
+            {mode === 'select' && selectedStudent.session[selectedSession] && <SelectedSession selectedStudent={selectedStudent} session={selectedSession}/>}
           </div>
         }
 
