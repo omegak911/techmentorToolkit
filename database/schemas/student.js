@@ -10,8 +10,8 @@ const studentSchema = new mongoose.Schema(
         type: Number,
         default: 0
       }
-      //1: { _id: { category: 'JSFundamentals', score: 4 }}
-      //2: { _id: { category: 'CSS', score: 10 }}
+      //1: [_id: { category: 'JSFundamentals', score: 4 }}, _id: { category: 'JSFundamentals', score: 4 }}]
+      //2: [_id: { category: 'CSS', score: 10 }}]
     },
 
     // questions: {

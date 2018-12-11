@@ -40,22 +40,15 @@ class NewSession extends Component {
   saveSession = () => {
     let { _id } = this.props.selectedStudent;
     let { session, sessionQuestions } = this.state;
+    let sessionQuestionsObject = {}
 
-    /* need to filter session questions to object with this format
-      {
-        [_id]: {
-          category: 'JSFundamentals',
-          score: 10
-        },
-        [_id]: {
-          category: 'JSFundamentals',
-          score: 10
-        }
-      }
-    */
+    for (let i = 0; i < sessionQuestions.length; i++) {
+      let question = sessionQuestions[i];
+      sessionQuestionsObject[question._id] = { category: question.category, score: null };
+    }
 
     axios
-      .patch('/api/mockInterview/main/student', { _id, session, sessionQuestions })
+      .patch('/api/mockInterview/main/student', { _id, session, sessionQuestions: sessionQuestionsObject })
       .then(() => console.log('update provider with new session data on student object'))
       .catch(() => console.error('NewSession saveSession error'))
   }
