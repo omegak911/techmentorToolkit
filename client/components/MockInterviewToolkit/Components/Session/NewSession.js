@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import SearchQuestion from '../ModuleReuse/SearchQuestion';
 import Question from '../ModuleReuse/Question';
@@ -36,11 +37,37 @@ class NewSession extends Component {
     }
   }
 
+  saveSession = () => {
+    let { _id } = this.props.selectedStudent;
+    let { session, sessionQuestions } = this.state;
+
+    /* need to filter session questions to object with this format
+      {
+        [_id]: {
+          category: 'JSFundamentals',
+          score: 10
+        },
+        [_id]: {
+          category: 'JSFundamentals',
+          score: 10
+        }
+      }
+    */
+
+    axios
+      .patch('/api/mockInterview/main/student', { _id, session, sessionQuestions })
+      .then(() => console.log('update provider with new session data on student object'))
+      .catch(() => console.error('NewSession saveSession error'))
+  }
+
+  //MVP+: order/reorder questions
+
   render() {
     let { duplicate, session, sessionQuestions } = this.state;
     return (
       <div>        
         <p>Next Session #: {` ${session}`}</p>
+        <button type="button" onClick={this.saveSession}>save</button>
         {duplicate && <div>Error: Selected question already exists in current session</div>}
         <SearchQuestion handleQuestionSelect={this.handleQuestionSelect}/>
 
