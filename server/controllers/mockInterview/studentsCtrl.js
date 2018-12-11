@@ -12,8 +12,8 @@ const addStudent = (req, res) => {
 }
 
 const deleteStudent = (req, res) => {
-  let { name } = req.body;
-  deleteStudentHelper(name)
+  let { _id } = req.body;
+  deleteStudentHelper(_id)
     .then(() => res.status(202).send('success'))
     .catch(err => res.status(404).send('error'));
 }
@@ -27,9 +27,9 @@ const deleteStudent = (req, res) => {
 // }
 
 const updateStudent = (req, res) => {
-  let { name, session, question } = req.body;
+  let { _id, session, sessionQuestions } = req.body;
   let objString = `session.${session}`;//objString should be ex. questions.JSFundamentals.1 | value = number
-  updateStudentHelper(name, objString, question)
+  updateStudentHelper(_id, objString, sessionQuestions)
     .then(() => res.status(204).send('success'))
     .catch(err => res.status(404).send('error'));
 }
