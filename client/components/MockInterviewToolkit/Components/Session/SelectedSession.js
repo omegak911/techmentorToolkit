@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Context from '../../Provider/Context';
 import Question from '../ModuleReuse/Question';
 
 class SelectedSession extends Component {
@@ -13,8 +14,21 @@ class SelectedSession extends Component {
   }
 
   handleQuestionSelect = ({ _id, category }) => {
-    this.setState({ [_id]: { category }});
+    // this.setState({ [_id]: { category }}); okay I dont think this needs to do anything
   }
+
+  updateRating = (_id, category, value) => {
+    this.setState({ [_id]: { category, value }})
+  }
+
+  /*  
+  persist
+  for (let key in this.state) {
+    if it's not an id, dont do anything
+    otherwise add to an object so we can update the selected Student in DB and provider
+  }
+
+  */
 
   render() {
     let { selectedStudent, session } = this.props;
@@ -26,22 +40,65 @@ class SelectedSession extends Component {
 
         for each of those questions, have a textbox field + rating
 
-        {selectedStudent.session[session].map(({ _id, answer, category, question }) =>
-          //wrap this with a div
-          <div key={_id} >
-            <Question _id={_id} answer={answer} category={category} question={question} handleQuestionSelect={this.handleQuestionSelect} />
-            <div>
-              <StyledForm action="">
-                {labelValues.map(value => 
-                  <div key={value}>
-                    <input type="radio"/>
-                    <div>{value}</div>
+
+
+        {/* okay let's refactor this
+          student object should look like
+          {
+            name:
+            cohort
+            session: {
+              1: {
+                id: {
+                  category
+                  score
+                },
+                id: {
+                  category
+                  score
+                }
+              },
+              2: {
+                id: {
+                  category
+                  score
+                },
+                id: {
+                  category
+                  score
+                }
+              }
+            }
+
+          } 
+            {Object.keys(selectedStudent.session[session]) gives me question ids     
+         */}
+
+         <Context.Consumer>
+           {(provider) => 
+            Object.keys(selectedStudent.session[session]).map(questionId => {
+              let { category } = selectedStudent.session[session][questionId];
+              let { answer, question } = provider.state.organizedQuestionData[category][questionId];
+              return (
+                <div key={questionId}>
+                  <Question _id={questionId} answer={answer} category={category} question={question} handleQuestionSelect={this.handleQuestionSelect} />
+                  <div>
+                    <StyledForm action="">
+                      {labelValues.map(value => 
+                        <div key={value}>
+                          <input type="radio" onClick={() => this.updateRating(questionId, category, value)}/>
+                          <div>{value}</div>
+                        </div>
+                      )}
+                    </StyledForm>
                   </div>
-                )}
-              </StyledForm>
-            </div>
-          </div>
-          //have the rating and notes here
+                </div>
+              )
+            })
+           }
+         </Context.Consumer>
+
+          {/* //have the expandable notes here */}
         )}
 
       </div>
